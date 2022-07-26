@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/BM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/CF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/GIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/MM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TEO" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/modules/BM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/modules/CF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/modules/GIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/modules/MM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/code/modules/TEO" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/modules/BM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/modules/CF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/modules/GIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/modules/MM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/modules/TEO" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/modules/BM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/modules/CF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/modules/GIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/modules/MM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/modules/TEO" vcs="Git" />
+  </component>
+</project>
