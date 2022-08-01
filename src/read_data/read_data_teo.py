@@ -34,17 +34,17 @@ class ReadDataTEO:
         TimeSpliceInput= str(data["TIMESLICE"])
 
         if TimeSpliceInput == 'monthly':
-            data["TIMESLICE"] = [*range(0, 13)]
+            data["TIMESLICE"] = [*range(1, 13)]
         elif TimeSpliceInput == 'weekly':
-            data["TIMESLICE"] = [*range(0, 55)]
+            data["TIMESLICE"] = [*range(1, 55)]
         elif TimeSpliceInput == 'daily':
-            data["TIMESLICE"] = [*range(0, 367)]
+            data["TIMESLICE"] = [*range(1, 367)]
         elif TimeSpliceInput == 'quad-hourly':
-            data["TIMESLICE"] = [*range(0, 2197)]
+            data["TIMESLICE"] = [*range(1, 2197)]
         elif TimeSpliceInput == 'bi-hourly':
-            data["TIMESLICE"] = [*range(0, 4393)]
+            data["TIMESLICE"] = [*range(1, 4393)]
         elif TimeSpliceInput == 'hourly':
-            data["TIMESLICE"] = [*range(0, 8785)]
+            data["TIMESLICE"] = [*range(1, 8785)]
 
         data["YEAR"] = ast.literal_eval(data["YEAR"])
         data["MODE_OF_OPERATION"] = ast.literal_eval(data["MODE_OF_OPERATION"])
