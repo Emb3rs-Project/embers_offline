@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emb3rs - Test Report</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+    integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="container pt-5">
+  <img src="https://www.emb3rs.eu/wp-content/uploads/2019/12/EMB3Rs_horizontal-Logo.png" class="img">
+  <!-- Change after this -->
+  <h1><p><u><center>Techno-economic optimization : Report</center></u></p></h1>
+    
+  <p align="justify"> Welcome to the module simulation report of the Techno-economic optimization (TEO) module in the EMB3RS platform. The TEO module determines the cost optimal matching of sinks and the sources. The optimal capacity of the technologies and storages, and their optimal operation is determined while considering several constraints.
+      
+The techno-economic optimization of your case has been succesfully completed. The results of the analysis are presented in this report. The report contains several sections. Each of them will present tables, plots and some text describing the main results of your case. For a detailed analysis of the results, you can download the results of the TEO module from the platform.</p>
+  
+  <h3><p><u>1. Capacity of Sources and Sinks</u></p></h3>
+  <p>The installed capacity of technologies all the sources and sinks for the final year in the analysis period is shown in the table below. The installed capacity can be used to analyse which technologies are chosen by the TEO for each sink and source. </p>
+    
+    <h5><p><u> <center>Final Source and Sink Capacities in kW </center> </u> </p></h5>
+    
+    
+    <div class="table-responsive">
+    <div align="center"> 
+    {{ANCT_df}}
+    </div>
+    <p>    
+    
+    <h4><p><u> The installed capacity of technologies for all sources and sinks</u></p></h4>
+    
+    <p> The installed capacity of technologies for all sources and sinks are visualized in the graph below. <p>
+    
+    <center> {{ANCAC|safe}}   </center>
+    
+    <h4><p><u>The installed capacity of technologies for each source</u></p></h4>
+        
+    <p> The installed capacity of technologies for each source are visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID1"
+        aria-expanded="false"
+        aria-controls="ID1"
+>
+    Expand: Installed capacity for each source
+    </button>
+    
+        
+    <!-- Collapsed content -->
+    <div class="collapse" id="ID1" style="padding: 15px 0px 0px 0px">
+    <div class="tips">
+    <p> The installed capacity of technologies for each source are visualized in the graphs below. <p>
+        
+  {% for source in ANCSOU %}
+    
+      {{source|safe}}
+    
+  {% endfor %}
+    
+    </div>
+    </div>
+    
+    
+    <h4><p><u>The installed capacity of technologies for each sink </u></p></h4>
+        
+        <p> The installed capacity of technologies for each sink are visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID2"
+        aria-expanded="false"
+        aria-controls="ID2"
+>
+    Expand: Installed capacity for each sink
+    </button>
+    <div class="collapse" id="ID2" style="padding: 15px 0px 0px 0px">
+    <div class="tips">
+    <p> The installed capacity of technologies for each sink are visualized in the graphs below. <p>
+  
+  {% for sink in ANCSI %}
+    
+      {{sink|safe}}
+    
+  {% endfor %}    
+
+    </div>
+    </div>
+    
+    <h4><p><u>The installed capacity of technologies for all grid specific technologies</u></p></h4>
+        
+        
+    <p> Grid specific technologies are used a back up technologies when the excess heat from the sources in not adequate to meet the sink heat or cold demands.<p>
+    
+  {% if ANCGS|length %}
+    
+    <p>The installed capacity of technologies for all grid specific technologies is visualized in the graph below.</p>
+    
+       <center> {{ANCGS|safe}}   </center>  
+        
+  {% else %}
+     
+       <p> There is no installed capacity for the grid specific technologies.<p>
+             
+  {% endif %}
+
+  <h3><p><u>2. Storage Capacities</u></p></h3>
+    <p>The installed capacity of storages for the final year in the analyis period is shown in the table below. This can be used to analyse which storages are chosen by the TEO. </p>
+    
+        <h5><p><u><center>Storage Capacities in kWh</center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center"> 
+    {{ANST_df}}
+    </div>
+    <p>
+        
+    <p>The installed capacity of storages for the final year in the analyis period is visualized in the graph below.</p>
+        
+    <center> {{ACSTO|safe}}   </center>      
+        
+        
+    <h3><p><u>3. Annual Heat generation</u></p></h3>
+    
+    <p>The annual heat and cold generation from all the technologies for all the sources and sinks is pressnetd in this section. The heat generation can be used to analyse which technologies are chosen by the TEO to generate and recover excess heat for each sink and source. </p>
+    
+    <p> The annual heat geenration from the sources is shown in the table below. <p>
+    
+    <h5><p><u><center> Annual Source Heat Generation in kWh</center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center"> 
+    {{AHTSO_df}}
+    </div>
+    <p>
+        
+        
+    <p> The annual heat generation for the sources is visualized in the graph below. <p>
+        
+            <center> {{PASOU|safe}}   </center>          
+    
+    
+    <p> The annual heat generation for each source is visualized in the graphs below. It can be exapnded by clicking on the button. <p>
+        
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID3"
+        aria-expanded="false"
+        aria-controls="ID3"
+>
+    Expand: Annual heat generation for each source 
+    </button>
+        
+<div class="collapse" id="ID3" style="padding: 15px 0px 0px 0px">
+    <div class="tips">
+       
+  {% for source in PAGSO %}
+    
+     <center> {{source|safe}}  </center> 
+    
+  {% endfor %}  
+
+    </div>
+    </div> 
+    
+    
+    <p> The annual consumption for the sinks is shown in the table below.. <p>
+
+    <h5><p><u><center> Annual Sink Heat or Cold Consumption in kWh</center> </u></p></h5>
+                                                                                                              
+    <div class="table-responsive">
+    <div align="center"> 
+    {{AHTSI_df}}
+    </div>
+    <p>
+ 
+    <p> The annual heat/cold consumption for the sinks is visualized in the graph below. <p>
+        
+            <center> {{PASI|safe}}   </center>           
+    
+ 
+    <p> The annual consumption for each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID4"
+        aria-expanded="false"
+        aria-controls="ID4"
+>
+    Expand: Annual heat or cold consumption for each sink 
+    </button>
+
+    <div class="collapse" id="ID4" style="padding: 15px 0px 0px 0px">
+    <div class="tips">
+
+  {% for sink in PAGSI %}
+    
+   <center>  {{sink|safe}}  </center> 
+    
+  {% endfor %}     
+    
+    </div>
+    </div> 
+
+  <h3><p><u>4. Intra Annual Heat and Cold Generation</u></p></h3>
+
+  <p align="justify"> The intra annual heat and cold generation provides insights about the heat generation from each technology in each timestep. The length of the intrannual timestep is defined by the user. This result can be used to identify the base and peak load technologies for each sink and source. Furthermore, it also highlights the hourly variation of the demand profiles and the supply dispatch needed to meet it.<p>
+    
+    
+    <h4><p><u> Intra Annual Heat Generation for all Sources</u></p></h4>
+    
+    <p> Intra annual heat generation for all sources is visualized in the graph below. <p>
+        
+            <center> {{PBTSOU|safe}}   </center>             
+    
+    <h4><p><u>Intra Annual Heat Generation for each Source</u></p></h4>
+    
+     <p> Intra annual heat generation for each source is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID5"
+        aria-expanded="false"
+        aria-controls="ID5"
+>
+    Expand: Intra annual heat generation for each source
+    </button>
+
+    <div class="collapse" id="ID5" style="padding: 15px 0px 0px 0px">
+    <div class="tips">  <p>
+ 
+  {% for source in PBTGSO %}
+    
+     <center> {{source|safe}}  </center> 
+    
+  {% endfor %}  
+
+    </div>
+    </div>
+    
+    <h4><p><u>Intra Annual Heat and Cold Consmuption for all Sinks </u></p></h4>
+        
+    <p> Intra annual heat and cold consmuption for all sinks is visualized in the graph below. <p>
+            <center> {{PBTSI|safe}}   </center>       
+    
+    <h4><p><u>Intra Annual Heat and Cold consumption for each Sink</u></p></h4>
+    
+    <p> Intra annual heat and cold consumption for each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID6"
+        aria-expanded="false"
+        aria-controls="ID6"
+>
+    Expand: Intra annual heat and cold consumption for each sink
+    </button> 
+
+  <div class="collapse" id="ID6" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>
+
+  {% for sink in PBTGSI %}
+    
+   <center>  {{sink|safe}}  </center> 
+    
+  {% endfor %} 
+      
+    </div>
+    </div>
+    
+  <h3><p><u>5. Overall Heat and Cold Generation and Consumption</u></p></h3>
+    
+    <p> The heat and cold generation for all sources and sinks is shown in the tables below. This presents the overall heat and cold generation for the entire analysis period. <p>
+    
+    <h5><p><u><center> Total Heat  Generation in kWh</center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center"> 
+    {{TOTSO_df}}
+    </div>
+    <p>
+        
+    <h5><p><u><center> Total Heat and Cold Consumption in kWh</center></u></p></h5>    
+    
+    <div class="table-responsive">
+    <div align="center"> 
+    {{TOTSI_df}}
+    </div>
+    <p>
+    
+    <p> The share of excess heat and cold generation from each source is visualized in the pie below. <p>
+    
+            <center> {{PIESOU|safe}}   </center>         
+
+    <p> The share of excess heat and cold consumption by each sink is visualized in the pie below. <p>
+    
+            <center> {{PEISI|safe}}   </center>         
+  <h3><p><u> 6. Emissions</u></p></h3>
+    
+   <p> Many of the technologies used for excess heat and cold recovery produce emissions. The TEO accounts for the emissions from the technologies. The overall emissions for all technologies is shown in the table below.'<p>
+    
+    
+    <h5><p><u><center> Emissions in Kg CO2eq </center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center">
+    {{TOTEM_df}}
+    </div>
+    <p>    
+        
+    <p> The emissions from all technologies is visualized in the graph below.<p>
+    
+            <center> {{EMALLCOMB|safe}}   </center>      
+    
+    <p> The emissions from each source is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID7"
+        aria-expanded="false"
+        aria-controls="ID7"
+>
+    Expand: Emissions from each source
+    </button> 
+
+  <div class="collapse" id="ID7" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>
+
+  {% for source in EMSO %}
+    
+     <center> {{source|safe}}  </center> 
+    
+  {% endfor %} 
+    
+    </div>
+    </div>
+    
+    <p> The emissions from each sink is visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID8"
+        aria-expanded="false"
+        aria-controls="ID8"
+>
+    Expand: Emissions from each sink
+    </button> 
+
+  <div class="collapse" id="ID8" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>
+        
+  {% for sink in EMSI %}
+    
+   <center>  {{sink|safe}}  </center> 
+    
+  {% endfor %} 
+        
+    </div>
+    </div>
+
+   {% if EMGRIDSPEC|length %}
+      <p> The emissions from the grid specific technologies is visualized in the graphs below.<p>        
+        
+            <center> {{EMGRIDSPEC|safe}}   </center> 
+    
+   {% else %}
+     
+     <p> There are no emissions from the grid specific technologies.<p>
+             
+   {% endif %}
+        
+
+  <h3><p><u> 7. Costs</u></p></h3>
+    
+  <p> The techno-economic optimization from the TEO determines a cost optimal solution for matching sources and sinks. Hence, the costs are an important result from the TEO. The costs are split into    Capital costs and operational costs. These are further presented in the next subsections.<p>    
+    
+  <h4><p><u>7.1 Capital Costs</u></p></h4>
+    
+    The capital costs of all technologies are presented in the table below. 
+    
+    <h5><p><u><center> Capital Costs in Euros</center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center">
+    {{CI_df}}
+    </div>
+    <p>    
+        
+    <p> The capital costs of all technologies are visualized in the graph below. <p>
+        
+            <center> {{CIAC|safe}}   </center>              
+    
+
+    <p> The capital costs of each source are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID9"
+        aria-expanded="false"
+        aria-controls="ID9"
+>
+    Expand: Capital costs of each source
+    </button> 
+
+  <div class="collapse" id="ID9" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>
+    
+  {% for source in CISO %}
+    
+   <center>  {{source|safe}}  </center> 
+    
+  {% endfor %} 
+                
+   </div>
+   </div>  
+    <p> The capital costs for each sink are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID10"
+        aria-expanded="false"
+        aria-controls="ID10"
+>
+    Expand: Capital costs for each sink
+    </button> 
+
+  <div class="collapse" id="ID10" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>
+        
+  {% for sink in CICI %}
+    
+   <center>  {{sink|safe}}  </center> 
+    
+  {% endfor %}    
+    
+   </div>
+   </div> 
+        
+    <p>The capital costs of all storages are presented in the table below. <p> 
+       
+    <h5><p><u><center> Storage Capital Costs in Euros</center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center">
+    {{CISTO_df}}
+    </div>
+    <p>   
+         
+    <p> The capital costs of each storage are visualized in the graph below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID11"
+        aria-expanded="false"
+        aria-controls="ID11"
+>
+    Expand: Capital costs of each storage
+    </button> 
+
+  <div class="collapse" id="ID11" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p> 
+        
+            <center> {{CISTO|safe}}   </center>      
+
+   </div>
+   </div>       
+
+  <h4><p><u>7.2 Operational Costs</u></p></h4>    
+    
+   <p>The operational costs of all technologies are presented in the table below.<p>
+    
+        <h5><p><u><center> Operational Costs in Euros </center></u></p></h5>
+    
+    <div class="table-responsive">
+    <div align="center">
+    {{OC_df}}
+    </div>
+    <p>        
+        
+    <p> The operational costs of all technologies are visualized in the graph below. <p>
+        
+        
+            <center> {{CIOC|safe}}   </center>         
+    
+     <p> The operational costs of each source are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID12"
+        aria-expanded="false"
+        aria-controls="ID12"
+>
+    Expand: Operational costs of each source
+    </button> 
+
+  <div class="collapse" id="ID12" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p> 
+  
+  {% for source in OCSO %}
+    
+   <center>  {{source|safe}}  </center> 
+    
+  {% endfor %}     
+    
+   </div>
+   </div>
+    
+     <p> The operationalcosts of each sink are visualized in the graphs below. It can be expanded by clicking on the button <p> 
+
+    <button
+        class="btn btn-dark"
+        type="button"
+        data-toggle="collapse"
+        data-target="#ID13"
+        aria-expanded="false"
+        aria-controls="ID13"
+>
+    Expand: Operational costs of each sink
+    </button> 
+
+  <div class="collapse" id="ID13" style="padding: 15px 0px 0px 0px">
+  <div class="tips">  <p>   
+
+  {% for sink in OCSI %}
+    
+   <center>  {{sink|safe}}  </center> 
+    
+  {% endfor %}   
+    
+   </div>
+   </div>
+        
+   <h3><p><u>8. Storage operation</u></p></h3> 
+    
+<p align="justify"> The techno-economic optimization considers heat storage while determining the optimal matching of sources and sinks.The annual cpacities of the heat storage have been presented befpore. However, the intra annual operation of the storage is necessary to analyze the dispatch of the systems and how the variability of excess heat vailability is balanced out in the system.<p>    
+    
+     <p align="justify"> The intrannual storage level of each storage are visualized in the graphs below. This shows the stored energy in the storage in every timestep. <p>
+
+  {% for storage in STOL %}
+    
+   <center>  {{storage|safe}}  </center> 
+    
+  {% endfor %}      
+    
+    
+     <p align="justify"> The intrannual storage charge and discharge, i.e. the cycling of each storage are visualized in the graphs below. The negative values indicate discharging and the positive values indicate charging. This shows the actual operation of the storage in every timestep. <p>    
+        
+  {% for storage in STOCD %}
+    
+   <center>  {{storage|safe}}  </center> 
+    
+  {% endfor %}  
+        
+</body>
+
+</html>

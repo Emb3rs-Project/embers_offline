@@ -1,0 +1,11 @@
+name: emb3rs-business-module
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - pip=
+  - colorama=
+  - numpy=
+  - numpy-financial=
+  - matplotlib=

@@ -1,0 +1,4 @@
+/venv/
+.idea
+*.pyc
+/run_scripts/

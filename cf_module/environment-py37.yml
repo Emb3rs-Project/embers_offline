@@ -1,0 +1,17 @@
+name: emb3rs-cf-module
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - pip=
+  - colorama=
+  - numpy=
+  - pandas=
+  - geopy=
+  - pvlib-python=
+  - urllib3=
+  - beautifulsoup4=
+  - matplotlib=
+  - requests=
+

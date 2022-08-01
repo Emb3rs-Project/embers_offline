@@ -1,0 +1,37 @@
+{
+  "platform": {
+    "type_of_object": "source",
+    "fuels_data": {
+      "natural_gas": {
+        "co2_emissions": 0.2,
+        "price": 0.055
+      },
+      "biomass": {
+        "co2_emissions": 0.2,
+        "price": 0.055
+      },
+      "fuel_oil": {
+        "co2_emissions": 0.2,
+        "price": 0.055
+      },
+      "electricity": {
+        "co2_emissions": 0.2,
+        "price": 0.055
+      }
+    },
+    "streams": [
+      {
+        "name": "source_stream",
+        "supply_temperature": 500,
+        "target_temperature": 55,
+        "fluid": "flue_gas",
+        "fluid_cp": 10,
+        "flowrate": 10,
+        "saturday_on": 1,
+        "sunday_on": 1,
+        "shutdown_periods": "[]",
+        "daily_periods": "[[10,18]]"
+      }
+    ]
+  }
+}

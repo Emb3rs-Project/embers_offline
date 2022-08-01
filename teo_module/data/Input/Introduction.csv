@@ -1,0 +1,7 @@
+
+,Tab,Description
+,SETS,Data sets used in the UTOPIA BASE model
+,PARAMETERS,Data for parameters used in the UTOPIA BASE model other than default values
+,PARAMETERS_DEFAULT_VALUES,Data for parameter's default values
+,MCM,Data for parameters and default values for the Monte Carlo Method (MCM) used in the UTOPIA BASE model
+,MCS_num,Number of Monte Carlo Simulations. Set to zero if no Monte Carlo Simulations should be used.
