@@ -1,15 +1,3 @@
-[submodule "cf_module"]
-	path = cf_module
-	url = https://github.com/Emb3rs-Project/p-core-functionalities.git
 [submodule "gis_module"]
 	path = gis_module
 	url = https://github.com/Emb3rs-Project/p-gis.git
-[submodule "market_module"]
-	path = market_module
-	url = https://github.com/Emb3rs-Project/p-market.git
-[submodule "teo_module"]
-	path = teo_module
-	url = https://github.com/Emb3rs-Project/p-teo.git
-[submodule "business_module"]
-	path = business_module
-	url = https://github.com/Emb3rs-Project/p-business.git
