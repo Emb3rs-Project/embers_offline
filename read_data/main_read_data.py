@@ -1,9 +1,17 @@
 import pandas as pd
-from .read_data_cf import read_data_cf
+from .read_data_cf import ReadDataCF
+from .read_data_gis import ReadDataGIS
+from .read_data_teo import ReadDataTEO
+import copy
 
-def main_read_data():
 
-    df_file = pd.read_excel('../test/inputs_test.xlsx', sheet_name=None)
+
+def main_read_data(file):
+
+    # NOTE: WE NEED EXCEL ERROR HANDLING!
+
+    df_file = pd.read_excel(file, sheet_name=None)
+
 
     keys = ['CF - Fuels Data',
             'CF - Sources General Data',
@@ -18,10 +26,16 @@ def main_read_data():
             'TEO',
             'BM']
 
-    cf_data = read_data_cf(df_file)
-    #gis_data = read_data_gis(df_file)
-    #mm_data = read_data_mm(df_file)
+    cf_inputs_reader = ReadDataCF()
+    cf_data = cf_inputs_reader.get_data(copy.deepcopy(df_file))
+
+    gis_inputs_reader = ReadDataGIS()
+    gis_data = gis_inputs_reader.get_data(copy.deepcopy(df_file))
+    teo_inputs_reader = ReadDataTEO()
+    teo_data = teo_inputs_reader.get_data(copy.deepcopy(df_file))
+    print(teo_data)
+
     #bm_data = read_data_bm(df_file)
     #mm_data = read_data_mm(df_file)
 
-    return cf_data #,gis_data,mm_data,bm_data,mm_data
+    return cf_data, gis_data, teo_data #,mm_data,bm_data

@@ -1,0 +1,15 @@
+[submodule "src_modules/cf_module"]
+	path = src_modules/cf_module
+	url = https://github.com/Emb3rs-Project/p-core-functionalities.git
+[submodule "src_modules/gis_module"]
+	path = src_modules/gis_module
+	url = https://github.com/Emb3rs-Project/p-gis.git
+[submodule "src_modules/market_module"]
+	path = src_modules/market_module
+	url = https://github.com/Emb3rs-Project/p-market.git
+[submodule "src_modules/teo_module"]
+	path = src_modules/teo_module
+	url = https://github.com/Emb3rs-Project/p-teo.git
+[submodule "src_modules/business_module"]
+	path = src_modules/business_module
+	url = https://github.com/Emb3rs-Project/p-business.git

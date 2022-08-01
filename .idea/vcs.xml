@@ -22,5 +22,15 @@
     <mapping directory="$PROJECT_DIR$/src/modules/GIS" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/modules/MM" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/src/modules/TEO" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/modules/BM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/modules/CF" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/modules/GIS" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/modules/MM" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/modules/TEO" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/p-business" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/p-core-functionalities" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/p-gis" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/p-market" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src_modules/p-teo" vcs="Git" />
   </component>
 </project>
