@@ -1,24 +1,23 @@
-from mappings.gis.mapping_create_network import mapping_create_network
-from mappings.gis.mapping_optimize_network import mapping_optimize_network
-from src_modules.cf_module.src.utilities.fuel_data_fill_values import fuel_data_fill_values
-from read_data.main_read_data import main_read_data
-from src_modules.cf_module.src.Source.simulation.Convert.convert_sources import convert_sources
-from src_modules.cf_module.src.Sink.simulation.convert_sinks import convert_sinks
-from src_modules.cf_module.src.Sink.characterization.building import building
-from src_modules.cf_module.src.Sink.characterization.greenhouse import greenhouse
-from src_modules.cf_module.src.utilities.kb import KB
-from src_modules.cf_module.src.utilities.kb_data import kb
-from mappings.cf.mapping_convert_sinks import mapping_convert_sinks
-from mappings.cf.mapping_convert_sources import mapping_convert_sources
-from mappings.cf.mapping_building import mapping_building
-from mappings.cf.mapping_greenhouse import mapping_greenhouse
-from mappings.cf.mapping_simple_user import mapping_simple_user
-from src_modules.cf_module.src.General.Simple_User.simple_user import simple_user
-from src_modules.gis_module.functions.create_network import run_create_network
-from src_modules.gis_module.functions.optimize_network import run_optimize_network
-from src_modules.gis_module.utilities import kb_data as gis_kb
-from mappings.teo.mapping_teo import mapping_teo
-
+from cf_module.src.utilities.fuel_data_fill_values import fuel_data_fill_values
+from cf_module.src.Source.simulation.Convert.convert_sources import convert_sources
+from cf_module.src.Sink.simulation.convert_sinks import convert_sinks
+from cf_module.src.Sink.characterization.building import building
+from cf_module.src.Sink.characterization.greenhouse import greenhouse
+from cf_module.src.General.Simple_User.simple_user import simple_user
+from cf_module.src.utilities.kb import KB
+from cf_module.src.utilities.kb_data import kb
+from src.mappings.cf.mapping_convert_sinks import mapping_convert_sinks
+from src.mappings.cf.mapping_convert_sources import mapping_convert_sources
+from src.mappings.cf.mapping_building import mapping_building
+from src.mappings.cf.mapping_greenhouse import mapping_greenhouse
+from src.mappings.cf.mapping_simple_user import mapping_simple_user
+from gis_module.functions.create_network import run_create_network
+from gis_module.functions.optimize_network import run_optimize_network
+from gis_module.utilities import kb_data as gis_kb
+from src.mappings.teo.mapping_teo import mapping_teo
+from src.read_data.main_read_data import main_read_data
+from src.mappings.gis.mapping_create_network import mapping_create_network
+from src.mappings.gis.mapping_optimize_network import mapping_optimize_network
 
 class Embers:
 
