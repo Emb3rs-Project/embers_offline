@@ -26,6 +26,7 @@ class Embers:
         dhn = self.DHNAssessment()
         dhn.read_user_inputs(file)
         dhn.run_simulation()
+        dhn.get_reports()
 
     #def run_pinch_analysis(self, file):
     #    pinch = self.PinchAnalysis()
@@ -98,22 +99,20 @@ class Embers:
             print("DHN Simulation STARTED!")
 
             self.cf_simulation()
-            self.gis_simulation()
-            self.teo_simulation()
 
+            # iteration start
             iteration = True
-            import json
-            ex_cap_json = json.load(open("test/Ex_cap_itr1.json"))
+            losses_last_iteration = 1
+            self.teo_results = {"ex_capacities": []}
 
-           # while iteration == True:
-           #     self.teo_simulation()
-#
-           #     if a == 1:
-           #         iteration = False
-           #     else:
-           #         self.gis_simulation(ex_cap_json)
+            while iteration == True:
+                self.gis_simulation(self.teo_results)
 
-            # teo
+                if abs(self.optimize_network_data["losses_cost_kw"]["losses_in_kw"] - losses_last_iteration)/losses_last_iteration*100 < 1:  # <10% converge
+                    iteration = False
+                else:
+                    losses_last_iteration = self.optimize_network_data["losses_cost_kw"]["losses_in_kw"].copy()
+                    self.teo_simulation()
 
             # if "mm_bm" not in not_to_run_modules:
             # mm
@@ -131,7 +130,7 @@ class Embers:
             self.convert_sources_data = convert_sources(convert_sources_input, KB(kb))
             print("CF COMPLETED!")
 
-        def gis_simulation(self, teo_data={"ex_cap": []}):
+        def gis_simulation(self, teo_data):
             print("GIS STARTED!")
 
             import warnings
@@ -155,18 +154,25 @@ class Embers:
             print("GIS COMPLETED!")
 
         def teo_simulation(self):
+            print("TEO STARTED!")
 
             teo_input = mapping_teo(self.optimize_network_data,
                                     self.convert_sinks_data,
                                     self.convert_sources_data,
                                     self.teo_data)
 
-            import json
-            with open("teo_data.json", "w") as outfile:
-                json.dump(teo_input, outfile)
 
-            self.teo_run_model_data = run_build_model(teo_input)
-           
+
+            self.teo_results = run_build_model(teo_input)
+
+            print("TEO COMPLETED!")
+
+        def get_reports(self):
+
+            file = open("teo_results.html", "w")
+            file.write(self.teo_results["report"])
+            file.close()
+
 
 
 

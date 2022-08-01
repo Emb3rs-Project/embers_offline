@@ -1,5 +1,6 @@
 
-def mapping_create_network(user_data, convert_sinks_data, convert_sources_data, teo_data={"ex_cap":[]}):
+def mapping_create_network(user_data, convert_sinks_data, convert_sources_data, teo_data):
+
 
     data = {
         "platform": {
@@ -14,7 +15,7 @@ def mapping_create_network(user_data, convert_sinks_data, convert_sources_data, 
             "n_thermal_storage": convert_sinks_data["n_thermal_storage"],
         },
         "teo-module": {
-            "ex_cap": teo_data["ex_cap"]
+            "ex_cap": teo_data["ex_capacities"]
         },
     }
 
