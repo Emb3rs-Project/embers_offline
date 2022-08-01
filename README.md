@@ -15,19 +15,19 @@ Each feature need a specfic CSV, which can be obtained in the folder csv_inputs
 
 Currently, each simulation generates HTML reports that the user can analyze
 
-DHN simulation:
-  - GIS
+DHN simulation reports:
+  - GIS  
   - TEO
-  - MM
-  - BM
+  - MM 
+  - BM 
   
-Pinch Analysis:
-  - CF
-  - BM
+Pinch Analysis reports:
+  - CF report
+  - BM report
 
-ORC design:
-  - CF
-  - BM
+ORC design reports:
+  - CF report
+  - BM report
 
 
 ---
