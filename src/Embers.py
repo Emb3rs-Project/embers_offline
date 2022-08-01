@@ -18,6 +18,7 @@ from src.mappings.teo.mapping_teo import mapping_teo
 from src.read_data.main_read_data import main_read_data
 from src.mappings.gis.mapping_create_network import mapping_create_network
 from src.mappings.gis.mapping_optimize_network import mapping_optimize_network
+from teo_module.module.src.integration import run_build_model
 
 class Embers:
 
@@ -155,10 +156,19 @@ class Embers:
 
         def teo_simulation(self):
 
-            toe_input = mapping_teo(self.optimize_network_data,
+            teo_input = mapping_teo(self.optimize_network_data,
                                     self.convert_sinks_data,
                                     self.convert_sources_data,
                                     self.teo_data)
+
+            import json
+            with open("teo_data.json", "w") as outfile:
+                json.dump(teo_input, outfile)
+
+            self.teo_run_model_data = run_build_model(teo_input)
+           
+
+
 
 
             a = 1

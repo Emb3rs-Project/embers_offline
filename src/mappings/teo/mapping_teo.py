@@ -262,100 +262,30 @@ def platform_technologies_to_buildmodel(river_data):
     )
 
 
+
+def platform_technology_to_storage_to_build_model(river_data):
+    data = []
+    for storage in river_data["platform_storages"]:
+        data.append({
+            "technology": "dhn",
+            "storage": storage["storage"],
+            "technologytostorage": 1,
+            "technologyfromstorage": 1,
+        })
+    return data
+
 def platform_to_buildmodel(river_data):
     platform_technologies = platform_technologies_to_buildmodel(river_data=river_data)
 
+    platform_technology_to_storage_data = platform_technology_to_storage_to_build_model(river_data)
+
     return {
         "platform_technologies": platform_technologies,
-        "platform_sets": {
-            "REGION": ["sweden"],
-            "EMISSION": ["co2"],
-            "TIMESLICE": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                12,
-                13,
-                14,
-                15,
-                16,
-                17,
-                18,
-                19,
-                20,
-                21,
-                22,
-                23,
-                24,
-                25,
-                26,
-                27,
-                28,
-                29,
-                30,
-                31,
-                32,
-                33,
-                34,
-                35,
-                36,
-                37,
-                38,
-                39,
-                40,
-                41,
-                42,
-                43,
-                44,
-                45,
-                46,
-                47,
-                48,
-            ],
-            "YEAR": [2022],
-            "MODE_OF_OPERATION": [1, 2],
-            "STORAGE": ["sto1"],
-        },
-        "platform_storages": [
-            {
-                "storage": "sto1",
-                "capital_cost_storage": 10,
-                "dicount_rate_sto": 0.1,
-                "operational_life_sto": 100,
-                "storage_max_charge": 10000,
-                "storage_max_discharge": 10000,
-                "l2d": 1,
-                "tag_heating": 1,
-                "tag_cooling": 0,
-                "storage_return_temp": 50,
-                "storage_supply_temp": 80,
-                "storage_ambient_temp": 20,
-                "residual_storage_capacity": 0,
-                "max_storage_capacity": 45000,
-                "storage_level_start": 10,
-                "u_value": 0.14,
-            }
-        ],
-        "platform_annual_emission_limit": [
-            {"emission": "co2", "annual_emission_limit": 15000000}
-        ],
+        "platform_sets": river_data["platform_sets"],
+        "platform_storages": river_data["platform_storages"],
+        "platform_annual_emission_limit": river_data["platform_annual_emission_limit"],
         "platform_budget_limit": [{"Region": "Sweden", "budget_limit": 10000000000000}],
-        "platform_technology_to_storage": [
-            {
-                "technology": "dhn",
-                "storage": "sto1",
-                "technologytostorage": 1,
-                "technologyfromstorage": 1,
-            }
-        ],
+        "platform_technology_to_storage": platform_technology_to_storage_data
     }
 
 
@@ -367,20 +297,16 @@ def mapping_teo(optimize_network_data, convert_sinks_data, convert_sources_data,
         "convert_sink": convert_sinks_data,
         "convert_source": convert_sources_data}
 
+    river_data.update(user_inputs)
 
     _gis_module_to_buildmodel = gis_module_to_buildmodel(river_data)
     _cf_module_to_buildmodel = cf_module_to_buildmodel(river_data)
     _platform_to_buildmodel = platform_to_buildmodel(river_data)
 
-    teo_data = {}
-
-    teo_data.update(user_inputs)
-    teo_data.update(_gis_module_to_buildmodel)
-    teo_data.update(_cf_module_to_buildmodel)
-    teo_data.update(_platform_to_buildmodel)
+    teo_data = {"platform": _platform_to_buildmodel, "gis-module":_gis_module_to_buildmodel, "cf-module": _cf_module_to_buildmodel}
 
     with open('teo_data.json', 'w') as outfile:
         json.dump(teo_data, outfile)
 
-    return teo_data
 
+    return {"platform": _platform_to_buildmodel, "gis-module":_gis_module_to_buildmodel, "cf-module": _cf_module_to_buildmodel}

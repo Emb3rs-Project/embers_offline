@@ -23,10 +23,29 @@ class ReadDataTEO:
         df_sheet = df_sheet[["Variable", "CS Input"]]
         df_sheet = df_sheet.set_index('Variable')
         data = df_sheet['CS Input'].to_dict()
+        data["REGION"] = [str(data["REGION"])]
 
-        data["REGION"] = str(data["REGION"])
-        data["EMISSION"] = str(data["EMISSION"])
-        data["TIMESLICE"] = ast.literal_eval(data["TIMESLICE"])
+        if data["EMISSION"] == data["EMISSION"].strip('][').split(', '):
+            data["EMISSION"] = [data["EMISSION"].strip("[]")]
+        else:
+            data["EMISSION"] = data["EMISSION"].strip('][').split(', ')
+
+
+        TimeSpliceInput= str(data["TIMESLICE"])
+
+        if TimeSpliceInput == 'monthly':
+            data["TIMESLICE"] = [*range(0, 13)]
+        elif TimeSpliceInput == 'weekly':
+            data["TIMESLICE"] = [*range(0, 55)]
+        elif TimeSpliceInput == 'daily':
+            data["TIMESLICE"] = [*range(0, 367)]
+        elif TimeSpliceInput == 'quad-hourly':
+            data["TIMESLICE"] = [*range(0, 2197)]
+        elif TimeSpliceInput == 'bi-hourly':
+            data["TIMESLICE"] = [*range(0, 4393)]
+        elif TimeSpliceInput == 'hourly':
+            data["TIMESLICE"] = [*range(0, 8785)]
+
         data["YEAR"] = ast.literal_eval(data["YEAR"])
         data["MODE_OF_OPERATION"] = ast.literal_eval(data["MODE_OF_OPERATION"])
         data["STORAGE"] = data["STORAGE"].strip('][').split(', ')

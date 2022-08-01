@@ -33,7 +33,6 @@ def main_read_data(file):
     gis_data = gis_inputs_reader.get_data(copy.deepcopy(df_file))
     teo_inputs_reader = ReadDataTEO()
     teo_data = teo_inputs_reader.get_data(copy.deepcopy(df_file))
-    print(teo_data)
 
     #bm_data = read_data_bm(df_file)
     #mm_data = read_data_mm(df_file)
