@@ -107,33 +107,17 @@ class Embers:
             iteration = True
             losses_last_iteration = 1
             self.teo_results = {"ex_capacities": []}
-#
+
             while iteration == True:
                 self.gis_simulation(self.teo_results)
-                iteration = False
-               #if abs(self.optimize_network_results["losses_cost_kw"][
-               #           "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 101:  # <10% converge
-               #    iteration = False
-               #else:
-               #    losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
-               #    self.teo_simulation()
+                if abs(self.optimize_network_results["losses_cost_kw"][
+                              "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 5:  # <5% converge
+                    iteration = False
+                else:
+                       losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
+                       self.teo_simulation()
 
-            #import json
-            #with open("convert_sinks_results.json", "w") as outfile:
-            #    json.dump(self.convert_sinks_results, outfile)
-#
-            #with open("teo_results.json", "w") as outfile:
-            #    json.dump(self.teo_results, outfile)
-
-            #import json
-            #f = open('convert_sinks_results.json')
-            #self.convert_sinks_results = json.load(f)
-            #f.close()
-            #f = open('teo_results.json')
-            #self.teo_results = json.load(f)
-            #f.close()
-#
-            #self.mm_simulation()
+            self.mm_simulation()
 
             # bm
             print("DHN Simulation - COMPLETED!")
@@ -215,10 +199,6 @@ class Embers:
             file.close()
 
 
-
-
-
-            a = 1
 
     # def pinch_analysis(self):
     #    # cf
