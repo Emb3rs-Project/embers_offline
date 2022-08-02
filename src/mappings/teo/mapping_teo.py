@@ -303,10 +303,5 @@ def mapping_teo(optimize_network_data, convert_sinks_data, convert_sources_data,
     _cf_module_to_buildmodel = cf_module_to_buildmodel(river_data)
     _platform_to_buildmodel = platform_to_buildmodel(river_data)
 
-    teo_data = {"platform": _platform_to_buildmodel, "gis-module":_gis_module_to_buildmodel, "cf-module": _cf_module_to_buildmodel}
-
-    with open('teo_data.json', 'w') as outfile:
-        json.dump(teo_data, outfile)
-
 
     return {"platform": _platform_to_buildmodel, "gis-module":_gis_module_to_buildmodel, "cf-module": _cf_module_to_buildmodel}

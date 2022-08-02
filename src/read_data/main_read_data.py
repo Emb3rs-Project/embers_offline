@@ -1,6 +1,7 @@
 import pandas as pd
 from .read_data_cf import ReadDataCF
 from .read_data_gis import ReadDataGIS
+from .read_data_mm import ReadDataMM
 from .read_data_teo import ReadDataTEO
 import copy
 
@@ -35,6 +36,9 @@ def main_read_data(file):
     teo_data = teo_inputs_reader.get_data(copy.deepcopy(df_file))
 
     #bm_data = read_data_bm(df_file)
-    #mm_data = read_data_mm(df_file)
 
-    return cf_data, gis_data, teo_data #,mm_data,bm_data
+    mm_inputs_reader = ReadDataMM()
+    mm_data = mm_inputs_reader.get_data(df_file)
+
+
+    return cf_data, gis_data, teo_data, mm_data #,bm_data
