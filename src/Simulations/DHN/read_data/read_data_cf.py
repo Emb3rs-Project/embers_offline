@@ -30,9 +30,11 @@ class ReadDataCF:
 
     def get_fuels_data(self, df_sheet):
         df_sheet = df_sheet.set_index('fuel')
+
+        df_sheet["price"] = df_sheet["price"]/1000
         df_sheet.index.name = None
         df_sheet = df_sheet.transpose()
-
+        df_sheet = df_sheet.where(pd.notnull(df_sheet), None)
         return df_sheet.to_dict()
 
 

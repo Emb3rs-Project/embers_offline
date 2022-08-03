@@ -78,6 +78,7 @@ def cf_module_to_buildmodel_specified_annual_demand_cf(river_data):
 
 
 def create_technology_cf(river_data, props):
+
     river_convert_source = river_data["convert_source"]
     return river_convert_source["teo_dhn"] | props
 
@@ -115,7 +116,7 @@ def cf_module_to_buildmodel_technologies_cf(river_data):
                                   "om_fix": conversion_technology["om_fix"],
                                   "om_var": conversion_technology["om_var"],
                                   "emissions_factor": conversion_technology["emissions"],
-                                  # "technology" : conversion_technology["technology"],
+                                  "input": conversion_technology["conversion_efficiency"],
                               }
                               | cond_input
                               | cond_technology,
@@ -169,7 +170,7 @@ def cf_module_to_buildmodel_technologies_cf(river_data):
                               "input_fuel": None,
                               "output_fuel": stream["output_fuel"],
                               "output": stream["output"],
-                              "max_capacity": 999999999,
+                              "max_capacity": stream["max_stream_capacity"],
                               "turnkey_a": 0,
                               "om_fix": 0,
                               "om_var": 0,
@@ -204,6 +205,7 @@ def cf_module_to_buildmodel_technologies_cf(river_data):
                                   "om_fix": conversion_technology["om_fix"],
                                   "om_var": conversion_technology["om_var"],
                                   "emissions_factor": conversion_technology["emissions"],
+                                  "input": conversion_technology["conversion_efficiency"],
                               }
                               | cond_input
                               | cond_technology,
