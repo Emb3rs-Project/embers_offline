@@ -4,7 +4,7 @@ class ReadDataMM:
 
     def get_data(self, df_file_excel):
         bm_data = self.get_bm_data(df_file_excel["BM"])
-
+        print(bm_data)
         return bm_data
 
     def get_bm_data(self, df_sheet):
@@ -14,5 +14,7 @@ class ReadDataMM:
         df_sheet.index.name = None
 
         df_sheet = df_sheet.transpose()
+
+
         return df_sheet.to_dict()
 

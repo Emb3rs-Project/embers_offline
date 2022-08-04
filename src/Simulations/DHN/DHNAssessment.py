@@ -1,31 +1,29 @@
-from ....cf_module.src.utilities.fuel_data_fill_values import fuel_data_fill_values
-from ....cf_module.src.Source.simulation.Convert.convert_sources import convert_sources
-from ....cf_module.src.Sink.simulation.convert_sinks import convert_sinks
-from ....cf_module.src.Sink.characterization.building import building
-from ....cf_module.src.Sink.characterization.greenhouse import greenhouse
-from ....cf_module.src.General.Simple_User.simple_user import simple_user
-from ....cf_module.src.utilities.kb import KB
-from ....cf_module.src.utilities.kb_data import kb
-from .mappings.cf.mapping_convert_sinks import mapping_convert_sinks
-from .mappings.cf.mapping_convert_sources import mapping_convert_sources
-from .mappings.cf.mapping_building import mapping_building
-from .mappings.cf.mapping_greenhouse import mapping_greenhouse
-from .mappings.cf.mapping_simple_user import mapping_simple_user
-from ....gis_module.functions.create_network import run_create_network
-from ....gis_module.functions.optimize_network import run_optimize_network
-from ....gis_module.utilities import kb_data as gis_kb
-from .mappings.teo.mapping_teo import mapping_teo
-from .read_data.main_read_data import main_read_data
-from .mappings.gis.mapping_create_network import mapping_create_network
-from .mappings.gis.mapping_optimize_network import mapping_optimize_network
-from ....teo_module.module.src.integration import run_build_model
-from ....market_module.market_module.long_term.main_longterm import main_longterm
-from .mappings.mm.mapping_mm import mapping_mm
-from ....market_module.market_module.long_term.market_functions.convert_user_and_module_inputs import convert_user_and_module_inputs
-from .mappings.bm.mapping_bm_dhn import mapping_bm_dhn
-from ....business_module.Businessmodulev1_clean import BM
-
-import json
+from cf_module.src.utilities.fuel_data_fill_values import fuel_data_fill_values
+from cf_module.src.Source.simulation.Convert.convert_sources import convert_sources
+from cf_module.src.Sink.simulation.convert_sinks import convert_sinks
+from cf_module.src.Sink.characterization.building import building
+from cf_module.src.Sink.characterization.greenhouse import greenhouse
+from cf_module.src.General.Simple_User.simple_user import simple_user
+from cf_module.src.utilities.kb import KB
+from cf_module.src.utilities.kb_data import kb
+from src.Simulations.DHN.mappings.cf.mapping_convert_sinks import mapping_convert_sinks
+from src.Simulations.DHN.mappings.cf.mapping_convert_sources import mapping_convert_sources
+from src.Simulations.DHN.mappings.cf.mapping_building import mapping_building
+from src.Simulations.DHN.mappings.cf.mapping_greenhouse import mapping_greenhouse
+from src.Simulations.DHN.mappings.cf.mapping_simple_user import mapping_simple_user
+from gis_module.functions.create_network import run_create_network
+from gis_module.functions.optimize_network import run_optimize_network
+from gis_module.utilities import kb_data as gis_kb
+from src.Simulations.DHN.mappings.teo.mapping_teo import mapping_teo
+from src.Simulations.DHN.read_data.main_read_data import main_read_data
+from src.Simulations.DHN.mappings.gis.mapping_create_network import mapping_create_network
+from src.Simulations.DHN.mappings.gis.mapping_optimize_network import mapping_optimize_network
+from teo_module.module.src.integration import run_build_model
+from market_module.market_module.long_term.main_longterm import main_longterm
+from src.Simulations.DHN.mappings.mm.mapping_mm import mapping_mm
+from src.Simulations.DHN.mappings.bm.mapping_bm_dhn import mapping_bm_dhn
+#from business_module.Businessmodulev1_clean import BM
+import os
 
 class DHNAssessment:
 
@@ -62,11 +60,13 @@ class DHNAssessment:
                 if sink_type == "building":
                     _data = mapping_building(_sink_raw)
                     _char_streams = building(_data, KB(kb))
+                    _sink_raw["name"] = _sink_raw["name"]
                     del _sink_raw['info']
 
                 elif sink_type == "greenhouse":
                     _data = mapping_greenhouse(_sink_raw)
                     _char_streams = greenhouse(_data)
+                    _sink_raw["name"] = _sink_raw["info"]["name"]
                     del _sink_raw['info']
 
                 elif sink_type == "simple_sink":
@@ -115,18 +115,20 @@ class DHNAssessment:
 
     def cf_simulation(self):
         print("CF STARTED!")
+
         convert_sinks_input = mapping_convert_sinks(self.sinks)
         self.convert_sinks_results = convert_sinks(convert_sinks_input, KB(kb))
 
         convert_sources_input = mapping_convert_sources(self.sources)
         self.convert_sources_results = convert_sources(convert_sources_input, KB(kb))
-        print("CF COMPLETED!")
 
+        import json
         with open("convert_sinks_results.json", "w") as outfile:
             json.dump(self.convert_sinks_results, outfile)
 
         with open("convert_sources_results.json", "w") as outfile:
             json.dump(self.convert_sources_results, outfile)
+
 
     def gis_simulation(self, teo_data):
         print("GIS STARTED!")
@@ -151,12 +153,6 @@ class DHNAssessment:
 
         print("GIS COMPLETED!")
 
-        exclude_keys = ['map_report']
-        data = {k: self.optimize_network_results[k] for k in set(list(self.optimize_network_results.keys())) - set(exclude_keys)}
-
-        with open("optimize_network_results.json", "w") as outfile:
-            json.dump(data, outfile)
-
     def teo_simulation(self):
         print("TEO STARTED!")
 
@@ -165,28 +161,20 @@ class DHNAssessment:
                                 self.convert_sources_results,
                                 self.teo_data)
 
-        with open("teo_input.json", "w") as outfile:
-            json.dump(teo_input, outfile)
 
         self.teo_results = run_build_model(teo_input)
 
         print("TEO COMPLETED!")
 
-        with open("teo_results.json", "w") as outfile:
-            json.dump(self.teo_results, outfile)
-
     def mm_simulation(self):
         print("MM STARTED!")
 
         mm_input = mapping_mm(self.teo_results, self.convert_sinks_results, self.mm_data)
-        mm_input_converted = convert_user_and_module_inputs(mm_input)
-
-        self.mm_results = main_longterm(mm_input_converted)
+        self.mm_results = main_longterm(mm_input)
 
         print("MM COMPLETED!")
 
-        with open("mm_results.json", "w") as outfile:
-            json.dump(self.mm_results, outfile)
+
 
     def bm_simulation(self):
         print("BM STARTED!")
@@ -196,19 +184,19 @@ class DHNAssessment:
 
         print("BM COMPLETED!")
 
-    def get_reports(self):
+    def get_reports(self, output_folder):
 
-        file = open("gis_results.html", "w")
+        file = open(os.path.join(output_folder, "gis_results.html"), "w")
         file.write(self.optimize_network_results["report"])
         file.close()
 
-        self.optimize_network_results["map_report"].save("gis_map.html")
+        self.optimize_network_results["map_report"].save(os.path.join(output_folder, "gis_map.html"))
 
-        file = open("teo_results.html", "w")
+        file = open(os.path.join(output_folder, "teo_results.html"), "w")
         file.write(self.teo_results["report"])
         file.close()
 
-        file = open("mm_results.html", "w")
+        file = open(os.path.join(output_folder, "mm_results.html"), "w")
         file.write(self.mm_results["report"])
         file.close()
 
