@@ -46,7 +46,6 @@ class ReadDataTEO:
         elif TimeSpliceInput == 'hourly':
             data["TIMESLICE"] = [*range(1, 8785)]
 
-        data["YEAR"] = ast.literal_eval(data["YEAR"])
         data["MODE_OF_OPERATION"] = ast.literal_eval(data["MODE_OF_OPERATION"])
         data["STORAGE"] = data["STORAGE"].strip('][').split(', ')
         data["platform_budget_limit"] = float(data["platform_budget_limit"])

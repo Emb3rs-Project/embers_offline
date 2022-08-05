@@ -4,10 +4,10 @@ class ReadDataGIS:
 
     def get_data(self, df_file_excel):
         gis_data = self.get_gis_data(df_file_excel["GIS"])
-
         return gis_data
 
     def get_gis_data(self,df_sheet):
+
         df_sheet = df_sheet[["Variable", "CS Input"]].copy()
         df_sheet[2:]["CS Input"] = df_sheet.loc[2:]["CS Input"].apply(float)
 
