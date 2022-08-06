@@ -22,17 +22,19 @@ from teo_module.module.src.integration import run_build_model
 from market_module.market_module.long_term.main_longterm import main_longterm
 from src.Simulations.DHN.mappings.mm.mapping_mm import mapping_mm
 from src.Simulations.DHN.mappings.bm.mapping_bm_dhn import mapping_bm_dhn
-#from business_module.Businessmodulev1_clean import BM
+from business_module.Businessmodulev1_clean import BM
 import os
 
 class DHNAssessment:
 
-    def __init__(self):
+    def __init__(self,not_to_run_modules=None):
         self.sources = []
         self.sinks = []
+        self.not_to_run_modules=not_to_run_modules
 
     def read_user_inputs(self, file):
-        cf_data_raw, self.gis_data, self.teo_data, self.mm_data = main_read_data(file)
+
+        cf_data_raw, self.gis_data, self.teo_data, self.mm_data, self.bm_data = main_read_data(file,self.not_to_run_modules)
 
         self.cf_characterization(cf_data_raw)
 
@@ -54,9 +56,11 @@ class DHNAssessment:
             _source_raw["fuels_data"] = self.fuels_data
             self.sources.append(_source_raw)
 
+
         # sinks
         for sink_type in cf_data_raw["sinks"]:
             for _sink_raw in cf_data_raw["sinks"][str(sink_type)]:
+
                 if sink_type == "building":
                     _data = mapping_building(_sink_raw)
                     _char_streams = building(_data, KB(kb))
@@ -84,7 +88,7 @@ class DHNAssessment:
 
         print("CF Characterization COMPLETED!")
 
-    def run_simulation(self, not_to_run_modules=None):
+    def run_simulation(self):
         print("DHN Simulation STARTED!")
 
         # CF
@@ -98,18 +102,19 @@ class DHNAssessment:
         while iteration == True:
             self.gis_simulation(self.teo_results)
             if abs(self.optimize_network_results["losses_cost_kw"][
-                       "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 5:  # <5% converge
+                       "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 10:  # <5% converge
                 iteration = False
             else:
                 losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
                 self.teo_simulation()
 
-        if not_to_run_modules != ["mm", "bm"]:
+        if "mm" in self.not_to_run_modules:
             # MM
             self.mm_simulation()
 
+        if "bm" in self.not_to_run_modules:
             # BM
-            # self.bm_simulation()
+            self.bm_simulation()
 
         print("DHN Simulation - COMPLETED!")
 
@@ -121,13 +126,6 @@ class DHNAssessment:
 
         convert_sources_input = mapping_convert_sources(self.sources)
         self.convert_sources_results = convert_sources(convert_sources_input, KB(kb))
-
-        import json
-        with open("convert_sinks_results.json", "w") as outfile:
-            json.dump(self.convert_sinks_results, outfile)
-
-        with open("convert_sources_results.json", "w") as outfile:
-            json.dump(self.convert_sources_results, outfile)
 
 
     def gis_simulation(self, teo_data):
@@ -174,12 +172,10 @@ class DHNAssessment:
 
         print("MM COMPLETED!")
 
-
-
     def bm_simulation(self):
         print("BM STARTED!")
 
-        bm_input = mapping_bm_dhn(self.teo_results, self.optimize_network_results, self.mm_results, self.bm_data)
+        bm_input = mapping_bm_dhn(self.teo_results, self.mm_results, self.optimize_network_results, self.bm_data)
         self.bm_results = BM(bm_input)
 
         print("BM COMPLETED!")
@@ -196,10 +192,12 @@ class DHNAssessment:
         file.write(self.teo_results["report"])
         file.close()
 
-        file = open(os.path.join(output_folder, "mm_results.html"), "w")
-        file.write(self.mm_results["report"])
-        file.close()
+        if "mm" in self.not_to_run_modules:
+            file = open(os.path.join(output_folder, "mm_results.html"), "w")
+            file.write(self.mm_results["report"])
+            file.close()
 
-        # file = open("bm_results.html", "w")
-        # file.write(self.bm_results["report"])
-        # file.close()
+        if "bm" in self.not_to_run_modules:
+            file = open(os.path.join(output_folder, "bm_results.html"), "w")
+            file.write(self.bm_results["report"])
+            file.close()
