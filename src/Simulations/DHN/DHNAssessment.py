@@ -27,7 +27,7 @@ import os
 
 class DHNAssessment:
 
-    def __init__(self,not_to_run_modules=None):
+    def __init__(self,not_to_run_modules=[]):
         self.sources = []
         self.sinks = []
         self.not_to_run_modules=not_to_run_modules
@@ -35,7 +35,6 @@ class DHNAssessment:
     def read_user_inputs(self, file):
 
         cf_data_raw, self.gis_data, self.teo_data, self.mm_data, self.bm_data = main_read_data(file,self.not_to_run_modules)
-
         self.cf_characterization(cf_data_raw)
 
     def cf_characterization(self, cf_data_raw):
@@ -108,11 +107,12 @@ class DHNAssessment:
                 losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
                 self.teo_simulation()
 
-        if "mm" in self.not_to_run_modules:
+
+        if "mm" not in self.not_to_run_modules:
             # MM
             self.mm_simulation()
 
-        if "bm" in self.not_to_run_modules:
+        if "bm" not in self.not_to_run_modules:
             # BM
             self.bm_simulation()
 
@@ -192,12 +192,12 @@ class DHNAssessment:
         file.write(self.teo_results["report"])
         file.close()
 
-        if "mm" in self.not_to_run_modules:
+        if "mm" not in self.not_to_run_modules:
             file = open(os.path.join(output_folder, "mm_results.html"), "w")
             file.write(self.mm_results["report"])
             file.close()
 
-        if "bm" in self.not_to_run_modules:
+        if "bm" not in self.not_to_run_modules:
             file = open(os.path.join(output_folder, "bm_results.html"), "w")
             file.write(self.bm_results["report"])
             file.close()

@@ -31,54 +31,16 @@ class Embers:
 
 # Dummy
 # Get file
-#dhn_excel_file = os.path.abspath('test/inputs/dhn_data.xlsx')
+dhn_excel_file = os.path.abspath('test/inputs/dhn_data.xlsx')
 #orc_excel_file = os.path.abspath('test/inputs/orc_data.xlsx')
 #pinch_excel_file = os.path.abspath('test/inputs/pinch_data.xlsx')
-#
+
 ## Save outputs in this folder
-#output_folder = os.path.abspath('test/outputs/')
-#
+output_folder = os.path.abspath('test/outputs/')
+
 ## Run platform features - As simple as that
-#platform = Embers()
-#platform.run_dhn(dhn_excel_file, output_folder)
+platform = Embers()
+platform.run_dhn(dhn_excel_file, output_folder)
 #platform.run_pinch_analysis(pinch_excel_file, output_folder)
 #platform.run_design_orc(pinch_excel_file, output_folder)
 
-
-# Case study
-dhn_excel_file = os.path.abspath('test/CS Data/CRES/DHN/CRES INPUTS - CASE 1.xlsx')
-output_folder = os.path.abspath('test/CS Data/CRES/DHN/outputs/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])
-
-dhn_excel_file = os.path.abspath('test/CS Data/Cimpor/DHN/CIMPOR INPUTS.xlsx')
-output_folder = os.path.abspath('test/CS Data/Cimpor/DHN/outputs/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])
-
-dhn_excel_file = os.path.abspath('test/CS Data/UoW/DHN/UoW INPUTS.xlsx')
-output_folder = os.path.abspath('test/CS Data/UoW/DHN/outputs/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])
-
-dhn_excel_file = os.path.abspath('test/CS Data/ADENE/DHN/ADENE INPUTS.xlsx')
-output_folder = os.path.abspath('test/CS Data/ADENE/DHN/outputs/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["mm", "bm"])
-
-
-
-dhn_excel_file = os.path.abspath('test/CS Data/UoW/DHN/UoW INPUTS.xlsx')
-output_folder = os.path.abspath('test/CS Data/UoW/DHN/outputs/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])
-
-dhn_excel_file = os.path.abspath('test/CS Data/Climaespaço/DHN/CLIMAESPAÇO INPUTS - CASE 1.xlsx')
-output_folder = os.path.abspath('test/CS Data/Climaespaço/DHN/outputs_1/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])
-
-dhn_excel_file = os.path.abspath('test/CS Data/Climaespaço/DHN/CLIMAESPAÇO INPUTS - CASE 2.xlsx')
-output_folder = os.path.abspath('test/CS Data/Climaespaço/DHN/outputs_2/')
-platform = Embers()
-platform.run_dhn(dhn_excel_file, output_folder, not_to_run_modules=["bm"])

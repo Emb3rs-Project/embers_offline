@@ -30,6 +30,7 @@ class ReadDataTEO:
         else:
             data["EMISSION"] = data["EMISSION"].strip('][').split(', ')
 
+        data["YEAR"] = ast.literal_eval(data["YEAR"])
 
         TimeSpliceInput= str(data["TIMESLICE"])
 
