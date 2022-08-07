@@ -101,7 +101,7 @@ class DHNAssessment:
         while iteration == True:
             self.gis_simulation(self.teo_results)
             if abs(self.optimize_network_results["losses_cost_kw"][
-                       "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 10:  # <5% converge
+                       "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 5:  # <5% converge
                 iteration = False
             else:
                 losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
