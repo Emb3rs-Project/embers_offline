@@ -46,5 +46,24 @@ platform_offline.run_dhn(file_path=dhn_file_path)
 ```
 As simple as that.
 
+Extra features:
+```python
+from Embers import Embers
+
+dhn_file_path = 'test/DHN/dhn_data.xlsx'
+
+# Starting from an intermediate step? read the json files of the modules, to start from where you desire
+# -> check below,the parameter:modules_data_json
+cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
+
+## Run platform features - As simple as that
+platform = Embers()
+platform.run_dhn(file_path=dhn_file_path,
+                 get_intermediate_steps_json=True,  # OPTIONAL
+                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL
+                 modules_data_json={"cf": cf_module_json})  # OPTIONAL
+
+```
+
 
 ---
