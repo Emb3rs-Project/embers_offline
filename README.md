@@ -40,8 +40,12 @@ Simulation example code:
 from Embers import Embers
 
 platform_offline = Embers()
+
+# Get file
 dhn_file_path = 'test/DHN/dhn_data.xlsx'
 platform_offline.run_dhn(file_path=dhn_file_path)
+
+# It always creates a folder ("intermediate_json_files") with json files of each module, and an output folder ("output") with the reports of each module
 
 ```
 As simple as that.
