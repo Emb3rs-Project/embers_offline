@@ -123,12 +123,9 @@ class ReadDataCF:
 
         if df_buildings.empty == False:
 
-
-
             # get  general data
             df_sinks_general_data['sink_id'] = df_sinks_general_data['sink_id'].apply(str)
             df_buildings['sink_id'] = df_buildings['sink_id'].apply(str)
-
 
             df_sinks_general_data["id"] = df_sinks_general_data['sink_id'].copy()
             df_sinks_general_data = df_sinks_general_data.set_index('sink_id')
@@ -160,6 +157,7 @@ class ReadDataCF:
 
 
                 general_data[sink_id]["info"] = data[str(sink_id)]  # convert to list
+                general_data[sink_id]["id"] = int(general_data[sink_id]["id"]) # id must be int
 
                 buildings_data.append(general_data[sink_id])
 
@@ -200,6 +198,8 @@ class ReadDataCF:
 
 
                     general_data[sink_id]["info"] = data[str(sink_id)]  # convert to list
+                    general_data[sink_id]["id"] = int(general_data[sink_id]["id"])  # id must be int
+
                     greenhouses_data.append(general_data[sink_id])
                 else:
                     greenhouses_data = []

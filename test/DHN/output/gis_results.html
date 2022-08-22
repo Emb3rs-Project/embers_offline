@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emb3rs - Test Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+    integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="container pt-5">
+  <img src="https://www.emb3rs.eu/wp-content/uploads/2019/12/EMB3Rs_horizontal-Logo.png" class="img">
+  <!-- Change after this -->
+  <h1>GIS Module Report</h1>
+
+  <h1>1. Aggregated Results</h1>
+  <p>
+    The aggregated results for the network are available in this section.
+    The table below shows the total values for the whole network.
+    Please note that a pipe can be used to connect multiple sources and sinks.
+    The pipes used for multiple sources and sinks are counted once to prevent redundancy.
+    Please see the next section for the detailed results.
+  </p>
+
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Table Info
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <ul>
+            <li>Total Network Length [m]: sum of the lengths of the pipelines used in the grid.</li>
+            <li>Total Costs [EUR]: sum of the digging costs (excluding surface pipes), piping costs, and pump cost (if defined by the user) for all pipes in the solution.</li>
+            <li>Total Thermal Loss [W]: sum of the thermal losses of the pipelines used in the grid.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: center;">
+      <th style="min-width: 100px;">Total Thermal Loss [W]</th>
+      <th style="min-width: 100px;">Total Installed Capacity [MW]</th>
+      <th style="min-width: 100px;">Total Network Length [m]</th>
+      <th style="min-width: 100px;">Total Costs [EUR]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>1338018.244</td>
+      <td>150067.287697</td>
+      <td>20468.28</td>
+      <td>133486010.36</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+  <h1>2. Detailed Results</h1>
+  <p>
+    The pipeline-specific results are available in this section.
+    The pipelines displayed in the table below are a collection of the pipes connecting a source and sink.
+    As explained in the previous section, it is possible for a pipe to be used to connect multiple sources and sinks.
+    Therefore, the sum of the values given in the table below is not equal to the total for the whole network.
+  </p>
+
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            Table Info
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <ul>
+            <li>From/To: IDs of the source/sink where the pipeline starts/ends.</li>
+            <li>Thermal Losses [W]: sum of the thermal losses of the pipes connecting the source and the sink.</li>
+            <li>Installed Capacity [MW]: sum of the installed capacities of the pipes connecting the source and the sink.</li>
+            <li>Length [m]: sum of the lengths of the pipes connecting the source and the sink.</li>
+            <li>Total_costs [EUR]: Sum of the digging costs (excluding surface pipes), piping costs, and pump cost (if defined by the user) of the pipes connecting the source and the sink.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: center;">
+      <th style="min-width: 100px;">From/to</th>
+      <th style="min-width: 100px;">Thermal Losses [W]</th>
+      <th style="min-width: 100px;">Installed Capacity [MW]</th>
+      <th style="min-width: 100px;">Length [m]</th>
+      <th style="min-width: 100px;">Total Cost [EUR]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>(1, 5)</td>
+      <td>185481.223</td>
+      <td>70724.417145</td>
+      <td>2894.57</td>
+      <td>17565839.74</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 6)</td>
+      <td>267307.877</td>
+      <td>70063.007270</td>
+      <td>4134.80</td>
+      <td>25929706.72</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 7)</td>
+      <td>30267.412</td>
+      <td>818.198154</td>
+      <td>465.08</td>
+      <td>2892641.09</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 8)</td>
+      <td>154901.543</td>
+      <td>58284.863029</td>
+      <td>2431.08</td>
+      <td>14440154.43</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 9)</td>
+      <td>201349.351</td>
+      <td>75218.532153</td>
+      <td>3135.08</td>
+      <td>19187791.83</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 10)</td>
+      <td>73580.931</td>
+      <td>37869.954930</td>
+      <td>1198.52</td>
+      <td>6128012.45</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 11)</td>
+      <td>777904.538</td>
+      <td>28773.853470</td>
+      <td>11873.81</td>
+      <td>78120066.59</td>
+    </tr>
+    <tr align="center">
+      <td>(1, -1)</td>
+      <td>118430.116</td>
+      <td>22732.192568</td>
+      <td>1878.29</td>
+      <td>10712247.51</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 5)</td>
+      <td>283757.182</td>
+      <td>88643.132409</td>
+      <td>4300.85</td>
+      <td>29004085.69</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 6)</td>
+      <td>365583.836</td>
+      <td>87981.722534</td>
+      <td>5541.08</td>
+      <td>37367952.67</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 7)</td>
+      <td>172994.929</td>
+      <td>18793.018319</td>
+      <td>2708.30</td>
+      <td>16196787.48</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 8)</td>
+      <td>253177.502</td>
+      <td>76203.578293</td>
+      <td>3837.36</td>
+      <td>25878400.38</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 9)</td>
+      <td>299625.310</td>
+      <td>93137.247417</td>
+      <td>4541.36</td>
+      <td>30626037.78</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 10)</td>
+      <td>171856.890</td>
+      <td>55788.670195</td>
+      <td>2604.80</td>
+      <td>17566258.40</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 11)</td>
+      <td>787446.711</td>
+      <td>29706.270370</td>
+      <td>11935.17</td>
+      <td>80488436.84</td>
+    </tr>
+    <tr align="center">
+      <td>(2, -1)</td>
+      <td>66807.651</td>
+      <td>8940.495200</td>
+      <td>1012.59</td>
+      <td>6828707.62</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 5)</td>
+      <td>220406.639</td>
+      <td>70788.396595</td>
+      <td>3513.91</td>
+      <td>19402873.72</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 6)</td>
+      <td>302233.293</td>
+      <td>70126.986720</td>
+      <td>4754.14</td>
+      <td>27766740.70</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 7)</td>
+      <td>37829.008</td>
+      <td>386.091102</td>
+      <td>661.46</td>
+      <td>2190473.89</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 8)</td>
+      <td>189826.959</td>
+      <td>58348.842479</td>
+      <td>3050.42</td>
+      <td>16277188.41</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 9)</td>
+      <td>236274.767</td>
+      <td>75282.511603</td>
+      <td>3754.42</td>
+      <td>21024825.81</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 10)</td>
+      <td>108506.347</td>
+      <td>37933.934381</td>
+      <td>1817.86</td>
+      <td>7965046.43</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 11)</td>
+      <td>812829.954</td>
+      <td>28837.832921</td>
+      <td>12493.15</td>
+      <td>79957100.57</td>
+    </tr>
+    <tr align="center">
+      <td>(3, -1)</td>
+      <td>153355.532</td>
+      <td>22796.172018</td>
+      <td>2497.63</td>
+      <td>12549281.49</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 5)</td>
+      <td>442925.375</td>
+      <td>93207.900310</td>
+      <td>6713.33</td>
+      <td>45273375.86</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 6)</td>
+      <td>524752.029</td>
+      <td>92546.490435</td>
+      <td>7953.56</td>
+      <td>53637242.84</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 7)</td>
+      <td>332163.122</td>
+      <td>23357.786219</td>
+      <td>5120.78</td>
+      <td>32466077.65</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 8)</td>
+      <td>412345.695</td>
+      <td>80768.346194</td>
+      <td>6249.84</td>
+      <td>42147690.55</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 9)</td>
+      <td>458793.503</td>
+      <td>97702.015318</td>
+      <td>6953.84</td>
+      <td>46895327.95</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 10)</td>
+      <td>331025.083</td>
+      <td>60353.438095</td>
+      <td>5017.28</td>
+      <td>33835548.57</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 11)</td>
+      <td>653696.818</td>
+      <td>22960.117780</td>
+      <td>9907.95</td>
+      <td>66817264.25</td>
+    </tr>
+    <tr align="center">
+      <td>(4, -1)</td>
+      <td>287140.482</td>
+      <td>28229.377368</td>
+      <td>4352.13</td>
+      <td>29349907.93</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 5)</td>
+      <td>239111.205</td>
+      <td>92848.313409</td>
+      <td>3624.16</td>
+      <td>24440621.55</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 6)</td>
+      <td>320937.859</td>
+      <td>92186.903534</td>
+      <td>4864.39</td>
+      <td>32804488.53</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 7)</td>
+      <td>128348.952</td>
+      <td>22998.199319</td>
+      <td>2031.61</td>
+      <td>11633323.34</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 8)</td>
+      <td>208531.525</td>
+      <td>80408.759293</td>
+      <td>3160.67</td>
+      <td>21314936.24</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 9)</td>
+      <td>254979.333</td>
+      <td>97342.428417</td>
+      <td>3864.67</td>
+      <td>26062573.64</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 10)</td>
+      <td>127210.913</td>
+      <td>59993.851195</td>
+      <td>1928.11</td>
+      <td>13002794.26</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 11)</td>
+      <td>742800.734</td>
+      <td>33911.451370</td>
+      <td>11258.48</td>
+      <td>75924972.70</td>
+    </tr>
+    <tr align="center">
+      <td>(0, -1)</td>
+      <td>0.000</td>
+      <td>0.000000</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emb3rs - Test Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+    integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="container pt-5">
+  <img src="https://www.emb3rs.eu/wp-content/uploads/2019/12/EMB3Rs_horizontal-Logo.png" class="img">
+  <!-- Change after this -->
+  <h1>GIS Module Report</h1>
+
+  <h1>1. Aggregated Results</h1>
+  <p>
+    The aggregated results for the network are available in this section.
+    The table below shows the total values for the whole network.
+    Please note that a pipe can be used to connect multiple sources and sinks.
+    The pipes used for multiple sources and sinks are counted once to prevent redundancy.
+    Please see the next section for the detailed results.
+  </p>
+
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Table Info
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <ul>
+            <li>Total Network Length [m]: sum of the lengths of the pipelines used in the grid.</li>
+            <li>Total Costs [EUR]: sum of the digging costs (excluding surface pipes), piping costs, and pump cost (if defined by the user) for all pipes in the solution.</li>
+            <li>Total Thermal Loss [W]: sum of the thermal losses of the pipelines used in the grid.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: center;">
+      <th style="min-width: 100px;">Total Thermal Loss [W]</th>
+      <th style="min-width: 100px;">Total Installed Capacity [MW]</th>
+      <th style="min-width: 100px;">Total Network Length [m]</th>
+      <th style="min-width: 100px;">Total Costs [EUR]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>1338018.244</td>
+      <td>150067.287697</td>
+      <td>20468.28</td>
+      <td>133486010.36</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+  <h1>2. Detailed Results</h1>
+  <p>
+    The pipeline-specific results are available in this section.
+    The pipelines displayed in the table below are a collection of the pipes connecting a source and sink.
+    As explained in the previous section, it is possible for a pipe to be used to connect multiple sources and sinks.
+    Therefore, the sum of the values given in the table below is not equal to the total for the whole network.
+  </p>
+
+  <div class="accordion" id="accordionExample">
+    <div class="card">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            Table Info
+          </button>
+        </h2>
+      </div>
+  
+      <div id="collapseTwo" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <ul>
+            <li>From/To: IDs of the source/sink where the pipeline starts/ends.</li>
+            <li>Thermal Losses [W]: sum of the thermal losses of the pipes connecting the source and the sink.</li>
+            <li>Installed Capacity [MW]: sum of the installed capacities of the pipes connecting the source and the sink.</li>
+            <li>Length [m]: sum of the lengths of the pipes connecting the source and the sink.</li>
+            <li>Total_costs [EUR]: Sum of the digging costs (excluding surface pipes), piping costs, and pump cost (if defined by the user) of the pipes connecting the source and the sink.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table border="1" class="dataframe table">
+  <thead>
+    <tr style="text-align: center;">
+      <th style="min-width: 100px;">From/to</th>
+      <th style="min-width: 100px;">Thermal Losses [W]</th>
+      <th style="min-width: 100px;">Installed Capacity [MW]</th>
+      <th style="min-width: 100px;">Length [m]</th>
+      <th style="min-width: 100px;">Total Cost [EUR]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>(1, 5)</td>
+      <td>185481.223</td>
+      <td>70724.417145</td>
+      <td>2894.57</td>
+      <td>17565839.74</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 6)</td>
+      <td>267307.877</td>
+      <td>70063.007270</td>
+      <td>4134.80</td>
+      <td>25929706.72</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 7)</td>
+      <td>30267.412</td>
+      <td>818.198154</td>
+      <td>465.08</td>
+      <td>2892641.09</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 8)</td>
+      <td>154901.543</td>
+      <td>58284.863029</td>
+      <td>2431.08</td>
+      <td>14440154.43</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 9)</td>
+      <td>201349.351</td>
+      <td>75218.532153</td>
+      <td>3135.08</td>
+      <td>19187791.83</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 10)</td>
+      <td>73580.931</td>
+      <td>37869.954930</td>
+      <td>1198.52</td>
+      <td>6128012.45</td>
+    </tr>
+    <tr align="center">
+      <td>(1, 11)</td>
+      <td>777904.538</td>
+      <td>28773.853470</td>
+      <td>11873.81</td>
+      <td>78120066.59</td>
+    </tr>
+    <tr align="center">
+      <td>(1, -1)</td>
+      <td>118430.116</td>
+      <td>22732.192568</td>
+      <td>1878.29</td>
+      <td>10712247.51</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 5)</td>
+      <td>283757.182</td>
+      <td>88643.132409</td>
+      <td>4300.85</td>
+      <td>29004085.69</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 6)</td>
+      <td>365583.836</td>
+      <td>87981.722534</td>
+      <td>5541.08</td>
+      <td>37367952.67</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 7)</td>
+      <td>172994.929</td>
+      <td>18793.018319</td>
+      <td>2708.30</td>
+      <td>16196787.48</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 8)</td>
+      <td>253177.502</td>
+      <td>76203.578293</td>
+      <td>3837.36</td>
+      <td>25878400.38</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 9)</td>
+      <td>299625.310</td>
+      <td>93137.247417</td>
+      <td>4541.36</td>
+      <td>30626037.78</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 10)</td>
+      <td>171856.890</td>
+      <td>55788.670195</td>
+      <td>2604.80</td>
+      <td>17566258.40</td>
+    </tr>
+    <tr align="center">
+      <td>(2, 11)</td>
+      <td>787446.711</td>
+      <td>29706.270370</td>
+      <td>11935.17</td>
+      <td>80488436.84</td>
+    </tr>
+    <tr align="center">
+      <td>(2, -1)</td>
+      <td>66807.651</td>
+      <td>8940.495200</td>
+      <td>1012.59</td>
+      <td>6828707.62</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 5)</td>
+      <td>220406.639</td>
+      <td>70788.396595</td>
+      <td>3513.91</td>
+      <td>19402873.72</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 6)</td>
+      <td>302233.293</td>
+      <td>70126.986720</td>
+      <td>4754.14</td>
+      <td>27766740.70</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 7)</td>
+      <td>37829.008</td>
+      <td>386.091102</td>
+      <td>661.46</td>
+      <td>2190473.89</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 8)</td>
+      <td>189826.959</td>
+      <td>58348.842479</td>
+      <td>3050.42</td>
+      <td>16277188.41</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 9)</td>
+      <td>236274.767</td>
+      <td>75282.511603</td>
+      <td>3754.42</td>
+      <td>21024825.81</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 10)</td>
+      <td>108506.347</td>
+      <td>37933.934381</td>
+      <td>1817.86</td>
+      <td>7965046.43</td>
+    </tr>
+    <tr align="center">
+      <td>(3, 11)</td>
+      <td>812829.954</td>
+      <td>28837.832921</td>
+      <td>12493.15</td>
+      <td>79957100.57</td>
+    </tr>
+    <tr align="center">
+      <td>(3, -1)</td>
+      <td>153355.532</td>
+      <td>22796.172018</td>
+      <td>2497.63</td>
+      <td>12549281.49</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 5)</td>
+      <td>442925.375</td>
+      <td>93207.900310</td>
+      <td>6713.33</td>
+      <td>45273375.86</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 6)</td>
+      <td>524752.029</td>
+      <td>92546.490435</td>
+      <td>7953.56</td>
+      <td>53637242.84</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 7)</td>
+      <td>332163.122</td>
+      <td>23357.786219</td>
+      <td>5120.78</td>
+      <td>32466077.65</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 8)</td>
+      <td>412345.695</td>
+      <td>80768.346194</td>
+      <td>6249.84</td>
+      <td>42147690.55</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 9)</td>
+      <td>458793.503</td>
+      <td>97702.015318</td>
+      <td>6953.84</td>
+      <td>46895327.95</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 10)</td>
+      <td>331025.083</td>
+      <td>60353.438095</td>
+      <td>5017.28</td>
+      <td>33835548.57</td>
+    </tr>
+    <tr align="center">
+      <td>(4, 11)</td>
+      <td>653696.818</td>
+      <td>22960.117780</td>
+      <td>9907.95</td>
+      <td>66817264.25</td>
+    </tr>
+    <tr align="center">
+      <td>(4, -1)</td>
+      <td>287140.482</td>
+      <td>28229.377368</td>
+      <td>4352.13</td>
+      <td>29349907.93</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 5)</td>
+      <td>239111.205</td>
+      <td>92848.313409</td>
+      <td>3624.16</td>
+      <td>24440621.55</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 6)</td>
+      <td>320937.859</td>
+      <td>92186.903534</td>
+      <td>4864.39</td>
+      <td>32804488.53</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 7)</td>
+      <td>128348.952</td>
+      <td>22998.199319</td>
+      <td>2031.61</td>
+      <td>11633323.34</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 8)</td>
+      <td>208531.525</td>
+      <td>80408.759293</td>
+      <td>3160.67</td>
+      <td>21314936.24</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 9)</td>
+      <td>254979.333</td>
+      <td>97342.428417</td>
+      <td>3864.67</td>
+      <td>26062573.64</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 10)</td>
+      <td>127210.913</td>
+      <td>59993.851195</td>
+      <td>1928.11</td>
+      <td>13002794.26</td>
+    </tr>
+    <tr align="center">
+      <td>(0, 11)</td>
+      <td>742800.734</td>
+      <td>33911.451370</td>
+      <td>11258.48</td>
+      <td>75924972.70</td>
+    </tr>
+    <tr align="center">
+      <td>(0, -1)</td>
+      <td>0.000</td>
+      <td>0.000000</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+</body>
+
+</html>

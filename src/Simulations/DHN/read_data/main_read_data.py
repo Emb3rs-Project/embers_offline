@@ -11,14 +11,24 @@ def main_read_data(file,not_to_run_modules):
 
     # NOTE: WE NEED EXCEL ERROR HANDLING!
     df_file = pd.read_excel(file, sheet_name=None)
-    cf_inputs_reader = ReadDataCF()
-    cf_data = cf_inputs_reader.get_data(copy.deepcopy(df_file))
 
-    gis_inputs_reader = ReadDataGIS()
-    gis_data = gis_inputs_reader.get_data(copy.deepcopy(df_file))
+    if "cf" in not_to_run_modules:
+        cf_data = []
+    else:
+        cf_inputs_reader = ReadDataCF()
+        cf_data = cf_inputs_reader.get_data(copy.deepcopy(df_file))
 
-    teo_inputs_reader = ReadDataTEO()
-    teo_data = teo_inputs_reader.get_data(copy.deepcopy(df_file))
+    if "gis" in not_to_run_modules:
+        gis_data = []
+    else:
+        gis_inputs_reader = ReadDataGIS()
+        gis_data = gis_inputs_reader.get_data(copy.deepcopy(df_file))
+
+    if "teo" in not_to_run_modules:
+        teo_data = []
+    else:
+        teo_inputs_reader = ReadDataTEO()
+        teo_data = teo_inputs_reader.get_data(copy.deepcopy(df_file))
 
     if "mm" in not_to_run_modules:
         mm_data = []

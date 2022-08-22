@@ -24,18 +24,24 @@ from src.Simulations.DHN.mappings.mm.mapping_mm import mapping_mm
 from src.Simulations.DHN.mappings.bm.mapping_bm_dhn import mapping_bm_dhn
 from business_module.Businessmodulev1_clean import BM
 import os
+import json
 
 class DHNAssessment:
 
-    def __init__(self,not_to_run_modules=[]):
+    def __init__(self, output_folder, json_folder, not_to_run_modules, get_intermediate_steps_json):
         self.sources = []
         self.sinks = []
-        self.not_to_run_modules=not_to_run_modules
+        self.not_to_run_modules = not_to_run_modules
+        self.get_intermediate_steps_json = get_intermediate_steps_json
+        self.output_folder = output_folder
+        self.json_folder = json_folder
+
 
     def read_user_inputs(self, file):
+        cf_data_raw, self.gis_data, self.teo_data, self.mm_data, self.bm_data = main_read_data(file, self.not_to_run_modules)
 
-        cf_data_raw, self.gis_data, self.teo_data, self.mm_data, self.bm_data = main_read_data(file,self.not_to_run_modules)
-        self.cf_characterization(cf_data_raw)
+        if "cf" not in self.not_to_run_modules:
+            self.cf_characterization(cf_data_raw)
 
     def cf_characterization(self, cf_data_raw):
         print("CF Characterization STARTED!")
@@ -87,34 +93,75 @@ class DHNAssessment:
 
         print("CF Characterization COMPLETED!")
 
-    def run_simulation(self):
+    def run_simulation(self, modules_data_json):
         print("DHN Simulation STARTED!")
 
         # CF
-        self.cf_simulation()
-        #
-        # GIS-TEO iteration start
-        iteration = True
-        losses_last_iteration = 1
-        self.teo_results = {"ex_capacities": []}
+        if modules_data_json["cf"] is None:
+            self.cf_simulation()
 
-        while iteration == True:
-            self.gis_simulation(self.teo_results)
-            if abs(self.optimize_network_results["losses_cost_kw"][
-                       "losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 10:  # <5% converge
-                iteration = False
-            else:
-                losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
-                self.teo_simulation()
+            if self.get_intermediate_steps_json == True:
+                self.get_json("cf", {
+                    "convert_sinks_results": self.convert_sinks_results,
+                    "convert_sources_results": self.convert_sources_results})
+
+        else:
+            self.convert_sinks_results = modules_data_json["cf"]["convert_sinks_results"]
+            self.convert_sources_results = modules_data_json["cf"]["convert_sources_results"]
+
+        # GIS-TEO iteration
+        if modules_data_json["gis"] is None and modules_data_json["teo"] is None:
+            iteration = True
+            losses_last_iteration = 1
+            self.teo_results = {"ex_capacities": []}
+
+            while iteration == True:
+                self.gis_simulation(self.teo_results)
+                if abs(self.optimize_network_results["losses_cost_kw"]["losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 10:  # <5% converge
+                    iteration = False
+
+                    if self.get_intermediate_steps_json == True:
+
+                        exclude_keys = ["map_report"] # Map would be represented in a different format if converted
+                        optimize_network_results_except_map_report = {k: self.optimize_network_results[k] for k in set(list(self.optimize_network_results.keys())) - set(exclude_keys)}
+
+                        self.get_json("gis", {
+                            "optimize_network_results": optimize_network_results_except_map_report})
+
+                        self.get_json("teo", self.teo_results)
+
+                    self.get_report("teo", self.teo_results)
+                    self.get_gis_report(self.optimize_network_results)
+                else:
+                    losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
+                    self.teo_simulation()
+
+        else:
+            self.optimize_network_results = modules_data_json["gis"]["optimize_network_results"]
+            self.teo_results = modules_data_json["teo"]
 
 
+
+        # MM
         if "mm" not in self.not_to_run_modules:
-            # MM
-            self.mm_simulation()
+            if modules_data_json["mm"] is None:
+                self.mm_simulation()
+                if self.get_intermediate_steps_json == True:
+                    self.get_json("mm", self.mm_results)
+            else:
+                self.mm_results = modules_data_json["mm"]
 
+            self.get_report("mm", self.mm_results)
+
+        # BM
         if "bm" not in self.not_to_run_modules:
-            # BM
             self.bm_simulation()
+
+            if self.get_intermediate_steps_json == True:
+                if self.get_intermediate_steps_json == True:
+                    self.get_json("bm", self.bm_results)
+
+            self.get_report("bm", self.bm_results)
 
         print("DHN Simulation - COMPLETED!")
 
@@ -126,7 +173,6 @@ class DHNAssessment:
 
         convert_sources_input = mapping_convert_sources(self.sources)
         self.convert_sources_results = convert_sources(convert_sources_input, KB(kb))
-
 
     def gis_simulation(self, teo_data):
         print("GIS STARTED!")
@@ -180,24 +226,23 @@ class DHNAssessment:
 
         print("BM COMPLETED!")
 
-    def get_reports(self, output_folder):
+    def get_report(self, module, data):
 
-        file = open(os.path.join(output_folder, "gis_results.html"), "w")
+        file = open(os.path.join(self.output_folder, module + "_results.html"), "w")
+        file.write(data["report"])
+        file.close()
+
+    def get_gis_report(self, data):
+
+        file = open(os.path.join(self.output_folder, "gis_results.html"), "w")
         file.write(self.optimize_network_results["report"])
+        file.write(data["report"])
         file.close()
 
-        self.optimize_network_results["map_report"].save(os.path.join(output_folder, "gis_map.html"))
+        self.optimize_network_results["map_report"].save(os.path.join(self.output_folder, "gis_map.html"))
 
-        file = open(os.path.join(output_folder, "teo_results.html"), "w")
-        file.write(self.teo_results["report"])
-        file.close()
+    def get_json(self, module, data):
+        full_path = os.path.join(self.json_folder, module + ".json")
+        with open(full_path, "w") as outfile:
+            outfile.write(json.dumps(data))
 
-        if "mm" not in self.not_to_run_modules:
-            file = open(os.path.join(output_folder, "mm_results.html"), "w")
-            file.write(self.mm_results["report"])
-            file.close()
-
-        if "bm" not in self.not_to_run_modules:
-            file = open(os.path.join(output_folder, "bm_results.html"), "w")
-            file.write(self.bm_results["report"])
-            file.close()
