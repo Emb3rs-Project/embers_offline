@@ -45,7 +45,8 @@ platform_offline = Embers()
 dhn_file_path = 'test/DHN/dhn_data.xlsx'
 platform_offline.run_dhn(file_path=dhn_file_path)
 
-# It always creates a folder ("intermediate_json_files") with json files of each module, and an output folder ("output") with the reports of each module
+# It always creates a folder ("intermediate_json_files") with json files of each module, and an output folder ("output") with the 
+reports of each module, inside you directory - DHN, in this case.
 
 ```
 As simple as that.
@@ -63,9 +64,9 @@ cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
 ## Run platform features - As simple as that
 platform = Embers()
 platform.run_dhn(file_path=dhn_file_path,
-                 get_intermediate_steps_json=True,  # OPTIONAL
-                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL
-                 modules_data_json={"cf": cf_module_json})  # OPTIONAL
+                 get_intermediate_steps_json=False,  # OPTIONAL - if you do not desire to get the modules json files from the simulation
+                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL - if you do not desire to run specfific modules
+                 modules_data_json={"cf": cf_module_json})  # OPTIONAL - if you have already the data for the modules, and you do not need to run it
 
 ```
 
