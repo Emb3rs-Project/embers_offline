@@ -32,7 +32,7 @@ ORC design reports:
 
 ---
 
-## Usage
+## Usage DHN Simulation
 
 Simulation example code:
 
@@ -40,9 +40,8 @@ Simulation example code:
 from Embers import Embers
 
 platform_offline = Embers()
-platform_offline.run_dhn("csv_inputs/dhn.csv")
-platform_offline.run_pinch_analysis("csv_inputs/pinch_analysis.csv")
-platform_offline.run_design_orc("csv_inputs/design_orc.csv")
+dhn_file_path = 'test/DHN/dhn_data.xlsx'
+platform_offline.run_dhn(file_path=dhn_file_path)
 
 ```
 As simple as that.
