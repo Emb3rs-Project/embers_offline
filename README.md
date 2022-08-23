@@ -32,7 +32,7 @@ ORC design reports:
 
 ---
 
-## Usage
+## Usage DHN Simulation
 
 Simulation example code:
 
@@ -40,12 +40,34 @@ Simulation example code:
 from Embers import Embers
 
 platform_offline = Embers()
-platform_offline.run_dhn("csv_inputs/dhn.csv")
-platform_offline.run_pinch_analysis("csv_inputs/pinch_analysis.csv")
-platform_offline.run_design_orc("csv_inputs/design_orc.csv")
+
+# Get file
+dhn_file_path = 'test/DHN/dhn_data.xlsx'
+platform_offline.run_dhn(file_path=dhn_file_path)
+
+# It always creates a folder ("intermediate_json_files") with json files of each module, and an output folder ("output") with the reports of each module, inside you directory - DHN, in this case.
 
 ```
 As simple as that.
+
+Extra features:
+```python
+from Embers import Embers
+
+dhn_file_path = 'test/DHN/dhn_data.xlsx'
+
+# Starting from an intermediate step? read the json files of the modules, to start from where you desire
+# -> check below,the parameter:modules_data_json
+cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
+
+## Run platform features - As simple as that
+platform = Embers()
+platform.run_dhn(file_path=dhn_file_path,
+                 get_intermediate_steps_json=False,  # OPTIONAL - if you do not desire to get the modules json files from the simulation
+                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL - if you do not desire to run specfific modules
+                 modules_data_json={"cf": cf_module_json})  # OPTIONAL - if you have already the data for the modules, and you do not need to run it
+
+```
 
 
 ---
