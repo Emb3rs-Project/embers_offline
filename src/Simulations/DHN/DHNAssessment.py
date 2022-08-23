@@ -168,7 +168,8 @@ class DHNAssessment:
     def cf_simulation(self):
         print("CF STARTED!")
 
-        convert_sinks_input = mapping_convert_sinks(self.sinks)
+        convert_sinks_input = mapping_convert_sinks(self.sinks, self.gis_data)
+
         self.convert_sinks_results = convert_sinks(convert_sinks_input, KB(kb))
 
         convert_sources_input = mapping_convert_sources(self.sources)
