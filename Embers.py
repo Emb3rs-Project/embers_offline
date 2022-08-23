@@ -7,7 +7,7 @@ from src.Simulations.Internal_Heat_Recovery.PinchAnalysis import PinchAnalysis
 # Main
 class Embers:
 
-    def run_dhn(self, file_path, not_to_run_modules=None, modules_data_json=None, get_intermediate_steps_json=False):
+    def run_dhn(self, file_path, not_to_run_modules=None, modules_data_json=None, get_intermediate_steps_json=True):
 
         dhn_excel_file = os.path.abspath(file_path)
         dir_path = os.path.dirname(dhn_excel_file)
@@ -80,8 +80,8 @@ cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
 
 ## Run platform features - As simple as that
 platform = Embers()
-platform.run_dhn(dhn_file_path,
-                 get_intermediate_steps_json=True,
+platform.run_dhn(file_path=dhn_file_path,
+                 get_intermediate_steps_json=False,  # OPTIONAL
                  not_to_run_modules=['mm', 'bm'],  # OPTIONAL
                  modules_data_json={"cf": cf_module_json})  # OPTIONAL
 
