@@ -34,6 +34,18 @@ ORC design reports:
 
 ## Usage DHN Simulation
 
+```
+Terminal
+
+clone the repo
+conda env -f create environment_all.yml
+conda activate new_embers_offline_v_2
+git submodule update --init --recursive
+git submodule update --recursive --remote
+
+```
+
+
 Simulation example code:
 
 ```python
