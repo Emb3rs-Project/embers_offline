@@ -4,13 +4,12 @@ from src.Simulations.DHN.DHNAssessment import DHNAssessment
 from src.Simulations.Internal_Heat_Recovery.DesignORC import DesignORC
 from src.Simulations.Internal_Heat_Recovery.PinchAnalysis import PinchAnalysis
 
+
 # Main
 class Embers:
 
-    def run_dhn(self, file_path, not_to_run_modules=None, modules_data_json=None, get_intermediate_steps_json=True):
-
-        dhn_excel_file = os.path.abspath(file_path)
-        dir_path = os.path.dirname(dhn_excel_file)
+    def folder_creator(self, file):
+        dir_path = os.path.dirname(file)
 
         # Save outputs in this folder
         if os.path.exists(os.path.join(dir_path, 'output')) == False:
@@ -27,6 +26,13 @@ class Embers:
 
         output_folder = os.path.abspath(output_folder_path)
         json_folder = os.path.abspath(json_files_folder_path)
+
+        return output_folder, json_folder
+
+    def run_dhn(self, file_path, not_to_run_modules=None, modules_data_json=None, get_intermediate_steps_json=True):
+
+        dhn_excel_file = os.path.abspath(file_path)
+        output_folder, json_folder = self.folder_creator(dhn_excel_file)
 
         # Check user inputs
         if not_to_run_modules == None:
@@ -53,43 +59,26 @@ class Embers:
         dhn.read_user_inputs(dhn_excel_file)
         dhn.run_simulation(modules_data_json)
 
-    # TODO: NOT YET FINISHED
-    #def run_design_orc(self, orc_file, output_folder):
-    #    orc = DesignORC()
-    #    orc.read_user_inputs(orc_file)
-    #    orc.run_simulation()
-    #    orc.get_reports(output_folder)
+    def run_design_orc(self, file_path):
 
-    #def run_pinch_analysis(self, pinch_file,output_folder):
-    #    pinch = PinchAnalysis()
-    #    pinch.read_user_inputs(pinch_file)
-    #    pinch.run_simulation()
-    #    pinch.get_reports(output_folder)
-#
-#############################################################################################
-#############################################################################################
-# USER INTERACTION -> Users have to put the correct file name to be read on the "test" folder.
-
-# DHN SIMULATION EXAMPLE ####################
-# Get file
-dhn_file_path = 'test/DHN/dhn_data.xlsx'
-
-# Starting from an intermediate step? read the json files of the modules, to start from where you desire
-# -> check below,the parameter:modules_data_json
-cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
-
-## Run platform features - As simple as that
-platform = Embers()
-platform.run_dhn(file_path=dhn_file_path,
-                 get_intermediate_steps_json=False,  # OPTIONAL
-                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL
-                 modules_data_json={"cf": cf_module_json})  # OPTIONAL
+        orc_file = os.path.abspath(file_path)
+        output_folder, json_folder = self.folder_creator(orc_file)
+        platform_orc = DesignORC(output_folder, json_folder)
+        platform_orc.read_user_inputs(orc_file)
+        platform_orc.simulation()
+        platform_orc.get_report()
+        platform_orc.get_json()
 
 
-#orc_excel_file = os.path.abspath('test/inputs/orc_data.xlsx')
-#pinch_excel_file = os.path.abspath('test/inputs/pinch_data.xlsx')
+    def run_pinch_analysis(self, file_path):
 
-#platform.run_pinch_analysis(pinch_excel_file, output_folder)
-#platform.run_design_orc(pinch_excel_file, output_folder)
+        pinch_file = os.path.abspath(file_path)
+        output_folder, json_folder = self.folder_creator(pinch_file)
+        platform_pinch_analysis = PinchAnalysis(output_folder, json_folder)
+        platform_pinch_analysis.read_user_inputs(pinch_file)
+        platform_pinch_analysis.simulation()
+        platform_pinch_analysis.get_report()
+        platform_pinch_analysis.get_json()
+
 
 

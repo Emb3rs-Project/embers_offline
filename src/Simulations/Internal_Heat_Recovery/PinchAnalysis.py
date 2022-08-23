@@ -1,56 +1,42 @@
 from cf_module.src.Source.simulation.Heat_Recovery.convert_pinch_isolated_streams import convert_pinch_isolated_streams
 from cf_module.src.utilities.kb import KB
 from cf_module.src.utilities.kb_data import kb
-from src.Simulations.Internal_Heat_Recovery.mappings.mapping_pinch_isolated_streams import mapping_pinch_isolated_streams
-from src.Simulations.Internal_Heat_Recovery.read_data.read_pinch import ReadDataPinchIsolatedStreams
+from cf_module.standalone.read_data.read_data_cf_pinch import ReadDataCFPinch
 from cf_module.src.utilities.fuel_data_fill_values import fuel_data_fill_values
+import pandas as pd
+from cf_module.standalone.mappings.mapping_pinch_analysis import mapping_pinch_analysis
 import os
+import json
 
 class PinchAnalysis:
 
+    def __init__(self, output_folder, json_folder):
+        self.output_folder = output_folder
+        self.json_folder = json_folder
+        self.sources = []
+
     def read_user_inputs(self, file):
-        cf_inputs = ReadDataPinchIsolatedStreams()
-        self.cf_data_raw = cf_inputs.get_data(file)
-        self.fill_fuels_data()
+        df_file = pd.read_excel(file, sheet_name=None)
+        cf_pinch = ReadDataCFPinch()
+        self.cf_data = cf_pinch.get_data(df_file)
 
-
-    def fill_fuels_data(self):
         # fuels_data
-        self.fuels_data = fuel_data_fill_values(self.cf_data_raw['location'],
-                                                self.cf_data_raw["fuels_data"],
-                                                KB(kb))
+        self.cf_data["fuels_data"] = fuel_data_fill_values(self.cf_data["sources"][0]['location'],
+                                                           self.cf_data["fuels_data"],
+                                                           KB(kb))
 
-        self.cf_data_raw["fuels_data"] = self.fuels_data
+    def simulation(self):
+        in_var = mapping_pinch_analysis(self.cf_data)
+        self.pinch_data = convert_pinch_isolated_streams(in_var, KB(kb))
 
-    def run_simulation(self):
 
-        pinch_analysis_input = mapping_pinch_isolated_streams(self.cf_data_raw)
-        self.pinch_analysis_results = convert_pinch_isolated_streams(pinch_analysis_input, KB(kb))
-
-    def get_reports(self, output_folder):
-        file = open(os.path.join(output_folder, "pinch_analysis_results.html"), "w")
-        file.write(self.pinch_analysis_results["report"])
+    def get_report(self):
+        file = open(os.path.join(self.output_folder, "pinch_results.html"), "w")
+        file.write(self.pinch_data["report"])
         file.close()
 
 
-    def get_parameters_values(self, key, val):
-        import ast
-        new_val = {
-            "saturday_on": {"yes": 1, "no": 0},
-            "sunday_on": {"yes": 1, "no": 0},
-            "space_heating_type": {"Conventional": 1, "Low temperature": 2},
-            "building_orientation": {
-                                    "North": "N",
-                                    "South": "S",
-                                    "East": "E",
-                                    "West": "W"},
-        }
-
-        if key == "real_hourly_capacity" or key == "real_monthly_capacity":
-            val = ast.literal_eval(val)
-            return val
-
-        elif key in new_val:
-            return new_val[key][val]
-        else:
-            return val
+    def get_json(self):
+        full_path = os.path.join(self.json_folder, "pinch_results.json")
+        with open(full_path, "w") as outfile:
+            outfile.write(json.dumps(self.pinch_data))

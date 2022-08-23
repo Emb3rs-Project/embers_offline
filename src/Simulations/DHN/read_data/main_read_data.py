@@ -1,5 +1,5 @@
 import pandas as pd
-from .read_data_cf import ReadDataCF
+from .read_data_cf_dhn import ReadDataCFDHN
 from .read_data_gis import ReadDataGIS
 from .read_data_mm import ReadDataMM
 from .read_data_teo import ReadDataTEO
@@ -15,7 +15,7 @@ def main_read_data(file,not_to_run_modules):
     if "cf" in not_to_run_modules:
         cf_data = []
     else:
-        cf_inputs_reader = ReadDataCF()
+        cf_inputs_reader = ReadDataCFDHN()
         cf_data = cf_inputs_reader.get_data(copy.deepcopy(df_file))
 
     if "gis" in not_to_run_modules:
