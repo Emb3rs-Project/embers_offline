@@ -23,11 +23,9 @@ DHN simulation reports:
   
 Pinch Analysis reports:
   - CF report
-  - BM report
 
 ORC design reports:
   - CF report
-  - BM report
 
 
 ---
