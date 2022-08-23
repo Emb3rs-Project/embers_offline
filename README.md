@@ -49,6 +49,9 @@ git submodule update --recursive --remote
 Simulation example code:
 
 ```python
+
+from Embers import Embers
+
 #############################################################################################
 #############################################################################################
 # USER INTERACTION -> Create a folder inside "test" folder with your input data
@@ -80,8 +83,8 @@ orc_file_path = 'test/ORC/orc_data.xlsx'
 platform.run_design_orc(orc_file_path)
 
 ##################### PINCH SIMULATION EXAMPLE ####################
-#orc_file_path = 'test/inputs/pinch_data.xlsx'
-#platform.run_pinch_analysis(orc_file_path)
+pinch_file_path = 'test/PINCH/pinch_data.xlsx'
+platform.run_pinch_analysis(pinch_file_path)
 
 ```
 As simple as that.
