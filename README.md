@@ -23,11 +23,9 @@ DHN simulation reports:
   
 Pinch Analysis reports:
   - CF report
-  - BM report
 
 ORC design reports:
   - CF report
-  - BM report
 
 
 ---
@@ -49,37 +47,45 @@ git submodule update --recursive --remote
 Simulation example code:
 
 ```python
+
 from Embers import Embers
 
-platform_offline = Embers()
+#############################################################################################
+#############################################################################################
+# USER INTERACTION -> Create a folder inside "test" folder with your input data
+# Automatically in that created folder, the reports and json files will be put there after each simulation
 
+##################### DHN SIMULATION EXAMPLE 1 ####################
 # Get file
 dhn_file_path = 'test/DHN/dhn_data.xlsx'
-platform_offline.run_dhn(file_path=dhn_file_path)
 
-# It always creates a folder ("intermediate_json_files") with json files of each module, and an output folder ("output") with the reports of each module, inside you directory - DHN, in this case.
+## Run platform features - As simple as that
+platform = Embers()
+platform.run_dhn(file_path=dhn_file_path)
 
-```
-As simple as that.
-
-Extra features:
-```python
-from Embers import Embers
-
-dhn_file_path = 'test/DHN/dhn_data.xlsx'
-
+##################### DHN SIMULATION EXAMPLE 2 ####################
 # Starting from an intermediate step? read the json files of the modules, to start from where you desire
 # -> check below,the parameter:modules_data_json
 cf_module_json = 'test/DHN/intermediate_json_files/cf.json'
 
 ## Run platform features - As simple as that
-platform = Embers()
 platform.run_dhn(file_path=dhn_file_path,
-                 get_intermediate_steps_json=False,  # OPTIONAL - if you do not desire to get the modules json files from the simulation
-                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL - if you do not desire to run specfific modules
-                 modules_data_json={"cf": cf_module_json})  # OPTIONAL - if you have already the data for the modules, and you do not need to run it
+                 get_intermediate_steps_json=True,  # OPTIONAL
+                 not_to_run_modules=['mm', 'bm'],  # OPTIONAL
+                 modules_data_json={"cf": cf_module_json}
+                 )  # OPTIONAL
+
+##################### ORC SIMULATION EXAMPLE ####################
+orc_file_path = 'test/ORC/orc_data.xlsx'
+platform.run_design_orc(orc_file_path)
+
+##################### PINCH SIMULATION EXAMPLE ####################
+pinch_file_path = 'test/PINCH/pinch_data.xlsx'
+platform.run_pinch_analysis(pinch_file_path)
 
 ```
+As simple as that.
+
 
 
 ---
