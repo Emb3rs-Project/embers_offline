@@ -117,24 +117,34 @@ class DHNAssessment:
 
             while iteration == True:
                 self.gis_simulation(self.teo_results)
-                if abs(self.optimize_network_results["losses_cost_kw"]["losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 5:  # <5% converge
-                    iteration = False
 
-                    if self.get_intermediate_steps_json == True:
+                if "teo" not in self.not_to_run_modules:
+                    if abs(self.optimize_network_results["losses_cost_kw"]["losses_in_kw"] - losses_last_iteration) / losses_last_iteration * 100 < 5:  # <5% converge
+                        iteration = False
 
-                        exclude_keys = ["map_report"] # Map would be represented in a different format if converted
-                        optimize_network_results_except_map_report = {k: self.optimize_network_results[k] for k in set(list(self.optimize_network_results.keys())) - set(exclude_keys)}
+                        if self.get_intermediate_steps_json == True:
 
-                        self.get_json("gis", {
-                            "optimize_network_results": optimize_network_results_except_map_report})
+                            exclude_keys = ["map_report"] # Map would be represented in a different format if converted
+                            optimize_network_results_except_map_report = {k: self.optimize_network_results[k] for k in set(list(self.optimize_network_results.keys())) - set(exclude_keys)}
 
-                        self.get_json("teo", self.teo_results)
+                            self.get_json("gis", {
+                                "optimize_network_results": optimize_network_results_except_map_report})
 
-                    self.get_report("teo", self.teo_results)
-                    self.get_gis_report(self.optimize_network_results)
+                            self.get_json("teo", self.teo_results)
+
+                        self.get_report("teo", self.teo_results)
+                        self.get_gis_report(self.optimize_network_results)
+                    else:
+                        losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
+                        self.teo_simulation()
                 else:
-                    losses_last_iteration = self.optimize_network_results["losses_cost_kw"]["losses_in_kw"].copy()
-                    self.teo_simulation()
+                    exclude_keys = ["map_report"]  # Map would be represented in a different format if converted
+                    optimize_network_results_except_map_report = {k: self.optimize_network_results[k] for k in
+                                                                  set(list(self.optimize_network_results.keys())) - set(
+                                                                      exclude_keys)}
+
+                    self.get_json("gis", {
+                        "optimize_network_results": optimize_network_results_except_map_report})
 
         else:
             self.optimize_network_results = modules_data_json["gis"]["optimize_network_results"]
