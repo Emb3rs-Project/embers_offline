@@ -146,6 +146,8 @@ class DHNAssessment:
                     self.get_json("gis", {
                         "optimize_network_results": optimize_network_results_except_map_report})
 
+                    break
+
         else:
             self.optimize_network_results = modules_data_json["gis"]["optimize_network_results"]
             self.teo_results = modules_data_json["teo"]
