@@ -203,6 +203,7 @@ class DHNAssessment:
                                                           self.create_network_results,
                                                           self.convert_sources_results,
                                                           self.convert_sinks_results)
+        self.get_json("gis_optimize_network_input", optimize_network_input)
 
         self.optimize_network_results = run_optimize_network(optimize_network_input, gis_kb.kb)
 
@@ -216,7 +217,7 @@ class DHNAssessment:
                                 self.convert_sources_results,
                                 self.teo_data)
 
-
+        self.get_json("teo_input", teo_input)
         self.teo_results = run_build_model(teo_input)
 
         print("TEO COMPLETED!")
@@ -225,6 +226,7 @@ class DHNAssessment:
         print("MM STARTED!")
 
         mm_input = mapping_mm(self.teo_results, self.convert_sinks_results, self.mm_data)
+        self.get_json("mm_input", mm_input)
         self.mm_results = main_longterm(mm_input)
 
         print("MM COMPLETED!")
@@ -233,6 +235,7 @@ class DHNAssessment:
         print("BM STARTED!")
 
         bm_input = mapping_bm_dhn(self.teo_results, self.mm_results, self.optimize_network_results, self.bm_data)
+        self.get_json("bm_input", bm_input)
         self.bm_results = BM(bm_input)
 
         print("BM COMPLETED!")
