@@ -245,13 +245,13 @@ def create_default_technology(name):
         "discount_rate_tech": 0.04,
         "capacity_to_activity": 8761,
         "residual_capacity": 0,
-        "max_capacity_investment": 100000000000,
+        "max_capacity_investment": 100000,
         "min_capacity": 0,
         "min_capacity_investment": 0,
         "annual_activity_lower_limit": 0,
-        "annual_activity_upper_limit": 100000000000,
+        "annual_activity_upper_limit": 1000000000,
         "model_period_activity_lower_limit": 0,
-        "model_period_activity_upper_limit": 1500000000000,
+        "model_period_activity_upper_limit": 15000000000,
     }
 
 
@@ -286,7 +286,7 @@ def platform_to_buildmodel(river_data):
         "platform_sets": river_data["platform_sets"],
         "platform_storages": river_data["platform_storages"],
         "platform_annual_emission_limit": river_data["platform_annual_emission_limit"],
-        "platform_budget_limit": [{"Region": "Sweden", "budget_limit": 10000000000000}],
+        "platform_budget_limit": [{"Region": "Sweden", "budget_limit": 10000000000}],
         "platform_technology_to_storage": platform_technology_to_storage_data
     }
 
