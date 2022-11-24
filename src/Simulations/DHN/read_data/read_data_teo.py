@@ -39,7 +39,7 @@ class ReadDataTEO:
         elif TimeSpliceInput == 'weekly':
             data["TIMESLICE"] = [*range(1, 49)]
         elif TimeSpliceInput == 'daily':
-            data["TIMESLICE"] = [*range(1, 361)]
+            data["TIMESLICE"] = [*range(1, 367)]
         elif TimeSpliceInput == 'quad-hourly':
             data["TIMESLICE"] = [*range(1, 2197)]
         elif TimeSpliceInput == 'bi-hourly':
